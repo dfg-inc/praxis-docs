@@ -1,0 +1,16 @@
+{
+  "name": "@praxis/docs-site",
+  "version": "0.1.0-alpha.34",
+  "private": true,
+  "type": "module",
+  "description": "Praxis user documentation portal (VitePress). Canonical Markdown lives in docs/user.",
+  "license": "UNLICENSED",
+  "scripts": {
+    "dev": "vitepress dev",
+    "build": "vitepress build",
+    "preview": "vitepress preview"
+  },
+  "devDependencies": {
+    "vitepress": "^1.6.3"
+  }
+}

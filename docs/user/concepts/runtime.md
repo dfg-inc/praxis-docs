@@ -1,0 +1,13 @@
+# Praxis Runtime
+
+Praxis Runtime is the single local MCP server used by every role plugin.
+
+- Packaged as `claude-extensions/praxis-runtime.mcpb`
+- Configured once in Claude Desktop (`jira_base_url`, `jira_email`, `jira_project_key`, `jira_token`)
+- Exposes public tools such as `praxis_doctor`, `praxis_ba_preview`, `praxis_developer_complete`
+
+Claude Desktop does **not** reliably inherit `launchctl setenv` or shell `.env` into the MCP child. That path failed after alpha.30. Desktop users configure `user_config`, not environment inheritance.
+
+CLI and CI still use `PRAXIS_JIRA_*`. That is not the ordinary Desktop install.
+
+See [Installation](/getting-started/installation) and [Secrets](/reference/secrets).
