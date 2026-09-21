@@ -291,6 +291,7 @@ Do not write Jira.
 ### STEP 24 — Publish and Pull Request
 
 - **Skill:** Publish Branch then Create Merge Request
-- **Empty GitHub repo:** baseline publish first, then feature branch, then PR
-- **Never:** force-push, merge, fabricate CI PASS, transition PRX-4
+- **Empty GitHub repo:** preview shows `sourceBranch=master`, `targetRemoteBranch=main`, exact refspec `<SHA>:refs/heads/main`, then approved baseline, then feature branch, then PR onto **main**
+- **Never:** force-push, merge, fabricate CI PASS, transition PRX-4, rename local master, create remote master
+- **Walkthrough:** [GitHub Delivery](/workflows/github-delivery)
 

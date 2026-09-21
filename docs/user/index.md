@@ -15,6 +15,7 @@ You do **not** need Make, npm, a terminal, `launchctl`, or a `.env` file for ord
 5. [Role plugins](/plugins/overview)
 6. [Copy-paste prompts](/reference/prompts)
 7. [Full tutorial](/workflows/full-e2e)
+8. [GitHub Delivery](/workflows/github-delivery)
 
 ## The four roles
 

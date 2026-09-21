@@ -174,6 +174,24 @@ Recompute hashes against Quality Review 1.
 Do not create a branch or commit.
 ```
 
+**PREVIEW — Baseline master → main**
+
+```
+Preview baseline publication for this empty GitHub repo.
+Local branch is master. Target remote branch is main.
+Show source SHA, exact refspec, force=false.
+Do not push.
+```
+
+**PREVIEW — Pull Request**
+
+```
+Preview a GitHub Pull Request:
+feature/PRX-4-counter-reset → main.
+Do not use local master as the PR base.
+Do not create it yet.
+```
+
 **WRITE — commit / publish / PR (separate approvals)**
 
 ```

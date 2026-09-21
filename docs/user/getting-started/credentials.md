@@ -40,7 +40,9 @@ Do not commit tokens. Do not put them in `.project`, chat, prompts, Marketplace 
 
 ## GitHub credentials (Git Delivery)
 
-GitHub is the alpha.42 MVP for Push / Pull Request.
+GitHub is the alpha.44 path for Status → Connect → Baseline (`master` → `main`) → feature commit → push → Pull Request.
+
+See [GitHub Delivery](/workflows/github-delivery).
 
 | Field | `user_config` | Secret |
 |-------|----------------|--------|

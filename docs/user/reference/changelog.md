@@ -2,6 +2,14 @@
 
 User-facing notes. Marketplace keeps its own catalog changelog as well; both should describe the same install model.
 
+## 0.1.0-alpha.44
+
+- Complete GitHub Delivery: local `master` publishes to GitHub `main` with an explicit refspec (`<SHA>:refs/heads/main`); empty UI-created repos are supported; remote `master` is not created
+- Feature commit stays on the Quality snapshot allowlist; hashes are re-read from the created Git commit
+- Pull Request base is published `main`, never local `master`; retries do not duplicate commits or PRs
+- CI PASS only for completed GitHub Actions success; missing workflows report `not_configured`
+- One copy-paste walkthrough: [GitHub Delivery](/workflows/github-delivery)
+
 ## 0.1.0-alpha.43
 
 - Connect Git updates `origin` when switching HTTPS ↔ SSH for the same GitHub repository (`git remote set-url`). Same repository identity is no longer treated as “already connected”

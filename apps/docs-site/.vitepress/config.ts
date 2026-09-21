@@ -38,6 +38,7 @@ const enSidebar = {
     { text: "BA only", link: "/workflows/ba-only" },
     { text: "Architect only", link: "/workflows/architect-only" },
     { text: "Developer only", link: "/workflows/developer-only" },
+    { text: "GitHub Delivery", link: "/workflows/github-delivery" },
     { text: "Quality only", link: "/workflows/quality-only" },
     { text: "Resume mid-flow", link: "/workflows/resume" },
   ],

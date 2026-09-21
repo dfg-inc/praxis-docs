@@ -34,6 +34,10 @@ Ordinary users should not edit Praxis source to work around a defect. Distinguis
 | `GIT_BASELINE_REQUIRED` | data | Empty GitHub repo needs approved baseline push before a PR |
 | `GIT_FORCE_PUSH_FORBIDDEN` / remote history conflict | safety | Praxis never force-pushes |
 | `GITHUB_TOKEN_UNAVAILABLE` | config | Runtime GitHub Token (PAT). Never paste into chat |
+| `GIT_SECRETS_DETECTED` | safety | Committed objects look like credentials. Publish is blocked. Values are not shown |
+| `ciStatus=not_configured` | expected | No GitHub Actions workflow in the committed tree. This is not CI PASS |
+| Baseline preview targets `master` on GitHub `main` | product (alpha.43) | Install alpha.44+. Refspec must be `<SHA>:refs/heads/main` |
+| Partial git write (`writeSucceeded` / verification failed) | expected | Outer MCP `ok` is false. Retry the same fingerprint. Do not force-push |
 | `QUALITY_HEALTH_TIMEOUT` / `QUALITY_DB_INIT_FAILED` | product/host | Bounded wait failed. Retry ensure; check `.praxis-quality/quality.log` |
 | `LOCAL_RUNTIME_UNAVAILABLE` | config | Cowork local access + folder |
 | Stale preview fingerprint | expected | New preview. Do not apply an older hash after generating a new preview (including after a Runtime upgrade). |
