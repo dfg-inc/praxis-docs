@@ -9,32 +9,32 @@ Replace keys with yours. `WP-20260914-002` / `PRX-1` / `PRX-3` / `PRX-4` are the
 **READ ONLY — inspect Epic**
 
 ```
-Проверь Epic PRX-1. Покажи существующие Story, canonical и superseded.
-Ничего не создавай и не обновляй в Jira.
+Inspect Epic PRX-1. Show existing Stories, canonical vs superseded.
+Do not create or update anything in Jira.
 ```
 
 **PREVIEW — proposal**
 
 ```
-Проверь Epic PRX-1 и подготовь BA proposal.
-Сначала изучи требования и существующие Story.
-Не создавай ничего в Jira автоматически.
-Покажи preview и дождись подтверждения.
+Inspect Epic PRX-1 and prepare a BA proposal.
+Study the requirements and existing Stories first.
+Do not create anything in Jira automatically.
+Show the preview and wait for confirmation.
 ```
 
 **WRITE — approved apply**
 
 ```
-Подтверждаю BA apply только для показанного preview
-и соответствующего fingerprint.
+I confirm BA apply only for the shown preview
+and the matching fingerprint.
 ```
 
 **READ ONLY — resume / canonical Story**
 
 ```
-Покажи BA status PRX-1, canonical Stories,
-superseded issues и готовность к Architect.
-Ничего не изменяй.
+Show BA status for PRX-1: canonical Stories,
+superseded issues, and Architect readiness.
+Do not change anything.
 ```
 
 ## Architect
@@ -42,13 +42,13 @@ superseded issues и готовность к Architect.
 **READ ONLY — intake**
 
 ```
-Покажи Architect status для Epic PRX-1. Ничего не изменяй.
+Show Architect status for Epic PRX-1. Do not change anything.
 ```
 
 **PREVIEW — analyze / design / one WP**
 
 ```
-Проанализируй репозиторий и подготовь design для reset().
+Analyze the repository and prepare a design for reset().
 Preview materialization only for WP-20260914-002.
 Do not create sibling work packages. Wait for approval.
 ```
@@ -56,13 +56,13 @@ Do not create sibling work packages. Wait for approval.
 **WRITE — approved apply**
 
 ```
-Подтверждаю Architect apply только для показанного WP и fingerprint.
+I confirm Architect apply only for the shown WP and fingerprint.
 ```
 
 **READ ONLY — verify Jira**
 
 ```
-Покажи mapping WP-20260914-002 → Jira key и title. Ничего не изменяй.
+Show the mapping WP-20260914-002 → Jira key and title. Do not change anything.
 ```
 
 **READ ONLY — resume**
@@ -76,62 +76,62 @@ Resume architecture for PRX-1 from existing design/. Read-only first.
 **READ ONLY — WP status**
 
 ```
-Проверь Developer status для WP-20260914-002.
-Покажи Jira mapping, active claim и readiness.
-Ничего не изменяй.
+Check Developer status for WP-20260914-002.
+Show Jira mapping, active claim, and readiness.
+Do not change anything.
 ```
 
 **PREVIEW — claim**
 
 ```
-Подготовь Developer claim для WP-20260914-002.
-Сначала покажи текущий Jira status и доступный
-transition для START_DEVELOPMENT.
-Не вызывай claim без подтверждения.
+Prepare a Developer claim for WP-20260914-002.
+First show the current Jira status and the available
+START_DEVELOPMENT transition.
+Do not call claim without confirmation.
 ```
 
 **WRITE — approved claim**
 
 ```
-Подтверждаю claim только для WP-20260914-002 и показанного START_DEVELOPMENT.
+I confirm claim only for WP-20260914-002 and the shown START_DEVELOPMENT.
 confirmation=YES.
 ```
 
 **PREVIEW — implementation plan**
 
 ```
-Покажи plan по change-spec. Файлы не меняй.
+Show the plan from the change-spec. Do not change files.
 ```
 
 **WRITE — implement**
 
 ```
-Реализуй только утверждённый change-spec.
-Сохрани существующие изменения.
-Запусти предусмотренные проектом тесты.
-Покажи diff и verification results.
+Implement only the approved change-spec.
+Keep existing changes.
+Run the project's configured tests.
+Show the diff and verification results.
 ```
 
 **READ ONLY — verify**
 
 ```
-Покажи последний test command, exit code, passed/failed. Не complete.
+Show the last test command, exit code, passed/failed. Do not complete.
 ```
 
 **PREVIEW — complete**
 
 ```
-Подготовь Developer completion и Quality handoff.
-Покажи evidence и ожидаемые Jira writes.
-Не запускай Quality автоматически.
-Не переводи Jira в Готово.
+Prepare Developer completion and the Quality handoff.
+Show evidence and expected Jira writes.
+Do not start Quality automatically.
+Do not move Jira to Done.
 ```
 
 **WRITE — approved complete**
 
 ```
-Подтверждаю praxis_developer_complete для WP-20260914-002.
-confirmation=YES. Не стартуй Quality.
+I confirm praxis_developer_complete for WP-20260914-002.
+confirmation=YES. Do not start Quality.
 ```
 
 **READ ONLY — resume**
@@ -142,44 +142,55 @@ Resume Developer work on WP-20260914-002. Status first. No writes.
 
 ## Quality
 
-**READ ONLY — ensure / inspect**
+**READ ONLY — status**
 
 ```
-praxis_quality_status. Если unhealthy — покажи, но не блокируй другие роли.
+Run praxis_quality_status. If Quality is not_started or unavailable,
+say so. Do not start it. Unhealthy Quality must not block other roles.
 ```
 
+**PREVIEW — ensure (starts the service, no review)**
+
 ```
-Проверь готовность WP-20260914-002 к QA.
-Найди Developer evidence, handoff и acceptance checks.
-Не создавай bugs и не меняй Jira.
+Run praxis_quality_ensure for this repository.
+Start the Quality service if needed, wait until it is healthy,
+then show health. Do not run Quality Review and do not write Jira.
+```
+
+**READ ONLY — inspect evidence**
+
+```
+Check whether WP-20260914-002 is ready for QA.
+Find Developer evidence, the Quality handoff, and acceptance checks.
+Do not create bugs and do not change Jira.
 ```
 
 **PREVIEW — review**
 
 ```
-Выполни Quality review только для WP-20260914-002.
-Проверь все acceptance criteria и существующие тесты.
-Покажи evidence и proposed Jira actions до apply.
+Run Quality review only for WP-20260914-002.
+Check all acceptance criteria and the existing tests.
+Show evidence and proposed Jira actions before apply.
 ```
 
 **PREVIEW — failed review / bugs**
 
 ```
-Покажи proposed bugs (numeric type id, not «Баг»). Не создавай их.
+Show proposed bugs (numeric type id, not the display name Bug). Do not create them.
 ```
 
 **WRITE — approved bugs**
 
 ```
-Подтверждаю только показанное создание bugs и fingerprint/plan.
+I confirm only the shown bug creation and fingerprint/plan.
 ```
 
 **WRITE — successful review / final approval**
 
 ```
-Подтверждаю только показанный Quality apply.
-Не выполняй дополнительных Jira transitions
-или bug creation вне утверждённого плана.
+I confirm only the shown Quality apply.
+Do not perform extra Jira transitions
+or bug creation outside the approved plan.
 ```
 
 ## Troubleshooting
@@ -187,47 +198,54 @@ praxis_quality_status. Если unhealthy — покажи, но не блоки
 **READ ONLY — Runtime unavailable**
 
 ```
-praxis_doctor отсутствует? Объясни PRAXIS_RUNTIME_UNAVAILABLE.
-Не предлагай CLI или launchctl. Как включить Praxis Runtime MCPB?
+praxis_doctor is missing? Explain PRAXIS_RUNTIME_UNAVAILABLE.
+Do not suggest CLI or launchctl. How do I enable the Praxis Runtime MCPB?
 ```
 
 **READ ONLY — Jira config missing**
 
 ```
-JIRA_CONFIG_UNAVAILABLE. Куда открыть Settings → Extensions → Praxis Runtime.
-Не проси токен в чат.
+JIRA_CONFIG_UNAVAILABLE. Where to open Settings → Extensions → Praxis Runtime.
+Do not ask for the token in chat.
 ```
 
 **READ ONLY — invalid .project**
 
 ```
-Покажи praxis_project_init_preview. Не пиши .project без confirmation=YES.
+Show praxis_project_init_preview. Do not write .project without confirmation=YES.
 ```
 
 **READ ONLY — transition unavailable**
 
 ```
-Покажи availableTransitions (id, name, toStatus) для WP.
-Не подставляй id вручную.
+Show availableTransitions (id, name, toStatus) for the WP.
+Do not invent transition ids.
 ```
 
 **READ ONLY — stale fingerprint**
 
 ```
-Fingerprint не совпал. Сделай новый preview. Не apply.
+Fingerprint mismatch. Make a new preview. Do not apply.
 ```
 
 **READ ONLY — claim conflict**
 
 ```
-Покажи кто держит claim. Не force-release без отдельного YES.
+Show who holds the claim. Do not force-release without a separate YES.
 ```
 
 **READ ONLY — missing Quality handoff**
 
 ```
-Есть ли design/WP-…/dev/quality-handoff.json и completion-evidence.json?
-Не считай Jira Done готовностью QA.
+Does design/WP-…/dev/quality-handoff.json and completion-evidence.json exist?
+Do not treat Jira Done as QA readiness.
+```
+
+**READ ONLY — Quality ensure failed**
+
+```
+praxis_quality_ensure failed. Show code, stage, durationMs, healthUrl, logPath.
+Do not tell me to run make quality-up or npm start.
 ```
 
 **READ ONLY — interrupted**
@@ -239,8 +257,8 @@ Status first for this role. List artifacts. Propose resume. No writes.
 **READ ONLY — inconsistent Jira/local**
 
 ```
-Сравни Jira statusCategory, local claim.state, evidence, handoff.
-Если Done без evidence — только recovery PREVIEW.
+Compare Jira statusCategory, local claim.state, evidence, and handoff.
+If Done without evidence — recovery PREVIEW only.
 ```
 
 ## Recovery
@@ -248,16 +266,16 @@ Status first for this role. List artifacts. Propose resume. No writes.
 **PREVIEW**
 
 ```
-Сгенерируй praxis_developer_complete_recovery_preview для WP-20260914-002.
-Покажи proposed changes. Ничего не применяй.
+Generate praxis_developer_complete_recovery_preview for WP-20260914-002.
+Show proposed changes. Apply nothing.
 ```
 
 **WRITE** (separate human approval)
 
 ```
-Подтверждаю recovery apply только для показанного previewFingerprint.
-Восстанови development status и evidence/handoff.
-Не запускай Quality.
+I confirm recovery apply only for the shown previewFingerprint.
+Restore development status and evidence/handoff.
+Do not start Quality.
 ```
 
 ## Status / inspection

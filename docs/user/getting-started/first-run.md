@@ -43,9 +43,9 @@ Pick **one** Skill:
 Example (read-only):
 
 ```
-Проверь Epic PRX-1 и покажи BA status.
-Сначала изучи требования и существующие Story.
-Не создавай ничего в Jira автоматически.
+Inspect Epic PRX-1 and show BA status.
+Study the requirements and existing Stories first.
+Do not create anything in Jira automatically.
 ```
 
 Then follow [human approval](/concepts/approvals). Natural language “yes” does **not** bypass `confirmation=YES` and preview fingerprints.

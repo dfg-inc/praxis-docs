@@ -10,7 +10,7 @@ Praxis asks because Jira writes are easy to duplicate and hard to undo.
 | PREVIEW | `praxis_ba_preview`, `praxis_architect_preview`, recovery preview | none — must not write |
 | APPLY | `praxis_ba_apply`, `praxis_architect_apply`, `praxis_developer_claim`, `praxis_developer_complete`, `praxis_quality_review` | `confirmation=YES` and, where required, `previewFingerprint` |
 
-Saying “да, делай” in chat does **not** satisfy the Runtime contract. The Skill must call the apply tool with `confirmation=YES` and the fingerprint from **that** preview.
+Saying “yes, do it” in chat does **not** satisfy the Runtime contract. The Skill must call the apply tool with `confirmation=YES` and the fingerprint from **that** preview.
 
 ## What YES means
 
@@ -18,15 +18,15 @@ You accept **exactly** the previewed Jira creates/updates/transitions. Reject by
 
 ## Examples
 
-**BA apply:** “Подтверждаю BA apply только для показанного preview и соответствующего fingerprint.”
+**BA apply:** “I confirm BA apply only for the shown preview and the matching fingerprint.”
 
-**Architect apply:** “Подтверждаю Architect apply только для показанного WP и fingerprint.”
+**Architect apply:** “I confirm Architect apply only for the shown WP and fingerprint.”
 
-**Developer claim:** “Подтверждаю claim только для WP-20260914-002 и показанного START_DEVELOPMENT.”
+**Developer claim:** “I confirm claim only for WP-20260914-002 and the shown START_DEVELOPMENT.”
 
-**Developer complete:** “Подтверждаю complete и Quality handoff. Не запускай Quality и не переводи Jira в Готово.”
+**Developer complete:** “I confirm complete and the Quality handoff. Do not start Quality and do not move Jira to Done.”
 
-**Quality apply:** “Подтверждаю только показанный Quality apply.”
+**Quality apply:** “I confirm only the shown Quality apply.”
 
 Each role transition is a **separate** approval. Completing Developer does not authorize Quality review.
 

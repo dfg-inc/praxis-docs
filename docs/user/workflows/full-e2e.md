@@ -45,10 +45,10 @@ For **each** step: plugin, Skill, prompt, what is read, what is written, expecte
 - **Prompt (READ / PREVIEW):**
 
 ```
-Проверь Epic PRX-1 и подготовь BA proposal.
-Сначала изучи требования и существующие Story.
-Не создавай ничего в Jira автоматически.
-Покажи preview и дождись подтверждения.
+Inspect Epic PRX-1 and prepare a BA proposal.
+Study the requirements and existing Stories first.
+Do not create anything in Jira automatically.
+Show the preview and wait for confirmation.
 ```
 
 - **Reads:** Epic, children, existing Stories
@@ -75,8 +75,8 @@ For **each** step: plugin, Skill, prompt, what is read, what is written, expecte
 - **Prompt (WRITE):**
 
 ```
-Подтверждаю BA apply только для показанного preview
-и соответствующего fingerprint.
+I confirm BA apply only for the shown preview
+and the matching fingerprint.
 ```
 
 - **Reads:** fingerprint
@@ -102,9 +102,9 @@ For **each** step: plugin, Skill, prompt, what is read, what is written, expecte
 - **Prompt:**
 
 ```
-Продолжи PRX-1 как архитектор. Нужен reset() → 0.
-Подготовь design package и Work Package.
-Не создавай Jira WP без preview.
+Continue PRX-1 as Architect. Need reset() → 0.
+Prepare the design package and Work Package.
+Do not create a Jira WP without preview.
 ```
 
 - **Reads:** repo, Stories, canon
@@ -134,7 +134,7 @@ Do not create sibling work packages.
 
 - **Plugin:** Architect
 - **Skill:** same
-- **Prompt (WRITE):** “Подтверждаю Architect apply только для показанного WP и fingerprint.”
+- **Prompt (WRITE):** “I confirm Architect apply only for the shown WP and fingerprint.”
 - **Writes:** Jira Task (example `PRX-4`), links, `architect-developer.handoff.json`
 - **Expected:** `readyForDevelopment`
 - **Approval:** YES + fingerprint
@@ -154,9 +154,9 @@ Do not create sibling work packages.
 - **Prompt:**
 
 ```
-Подготовь Developer claim для WP-20260914-002.
-Сначала покажи Jira status и transition START_DEVELOPMENT.
-Не вызывай claim без подтверждения.
+Prepare a Developer claim for WP-20260914-002.
+First show the Jira status and the START_DEVELOPMENT transition.
+Do not call claim without confirmation.
 ```
 
 Then YES.
@@ -181,8 +181,8 @@ Then YES.
 - **Prompt:**
 
 ```
-Реализуй только утверждённый change-spec.
-Сохрани существующие increment/decrement.
+Implement only the approved change-spec.
+Keep existing increment/decrement.
 ```
 
 - **Writes:** product files (e.g. `src/counter.js`)
@@ -207,10 +207,10 @@ Then YES.
 - **Prompt (WRITE):**
 
 ```
-Подготовь Developer completion и Quality handoff.
-Покажи evidence и ожидаемые Jira writes.
-Не запускай Quality автоматически.
-Не переводи Jira в Готово.
+Prepare Developer completion and the Quality handoff.
+Show evidence and expected Jira writes.
+Do not start Quality automatically.
+Do not move Jira to Done.
 ```
 
 - **Writes:** evidence JSON, Praxis properties, comment
@@ -230,9 +230,9 @@ Then YES.
 ### STEP 17 — Launch Praxis Quality
 
 - **Plugin:** Praxis Quality (+ Runtime)
-- **Skill:** Quality Status / Ensure
-- **Prompt:** “Ensure Quality. Do not review yet.”
-- **Writes:** may start local Quality service
+- **Skill:** Quality Status then Ensure
+- **Prompt:** “Run praxis_quality_ensure. Do not review yet.”
+- **Writes:** starts the bundled Quality service; creates `.praxis-quality/` only after a successful start
 - **Verify:** BA/Architect/Developer still work if Quality is down
 
 ### STEP 18 — Quality review
@@ -242,9 +242,9 @@ Then YES.
 - **Prompt:**
 
 ```
-Выполни Quality review только для WP-20260914-002.
-Проверь evidence, handoff и тесты.
-Покажи proposed Jira actions до apply.
+Run Quality review only for WP-20260914-002.
+Check evidence, handoff, and tests.
+Show proposed Jira actions before apply.
 ```
 
 - **Reads:** evidence, handoff, tests
@@ -255,10 +255,10 @@ Then YES.
 ### STEP 19 — Quality approval or bug/revision
 
 - **Plugin:** Quality
-- **Prompt (WRITE):** “Подтверждаю только показанный Quality apply.”
-- **Writes:** pass → Jira **Готово**; fail → bugs / blocked, not silent Done
+- **Prompt (WRITE):** “I confirm only the shown Quality apply.”
+- **Writes:** pass → Jira **Done** (localized **Готово**); fail → bugs / blocked, not silent Done
 - **Approval:** YES
-- **Verify:** bugs use numeric type id, not the word «Баг»
+- **Verify:** bugs use numeric type id, not the display name Bug
 
 ### STEP 20 — Final verification
 

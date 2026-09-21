@@ -2,6 +2,13 @@
 
 User-facing notes. Marketplace keeps its own catalog changelog as well; both should describe the same install model.
 
+## 0.1.0-alpha.36
+
+- Quality HTTP service is bundled in the Runtime MCPB (`server/praxis-quality.cjs`)
+- `praxis_quality_ensure` actually starts the service, waits for health, and creates `.praxis-quality/`
+- Structured startup errors replace generic `WORKFLOW_BLOCKED`
+- User documentation is English-only (Marketplace method pages may still have a Russian locale)
+
 ## 0.1.0-alpha.35
 
 - Developer complete no longer maps to Jira Done

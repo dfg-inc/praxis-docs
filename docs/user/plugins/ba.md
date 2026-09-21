@@ -25,25 +25,25 @@ Idempotent apply reuses canonical keys (example: PRX-3 canonical, PRX-2 supersed
 Inspect Epic (READ ONLY):
 
 ```
-Проверь Epic PRX-1 и подготовь BA proposal.
-Сначала изучи требования и существующие Story.
-Не создавай ничего в Jira автоматически.
-Покажи preview и дождись подтверждения.
+Inspect Epic PRX-1 and prepare a BA proposal.
+Study the requirements and existing Stories first.
+Do not create anything in Jira automatically.
+Show the preview and wait for confirmation.
 ```
 
 Approved apply (WRITE):
 
 ```
-Подтверждаю BA apply только для показанного preview
-и соответствующего fingerprint.
+I confirm BA apply only for the shown preview
+and the matching fingerprint.
 ```
 
 Status (READ ONLY):
 
 ```
-Покажи BA status PRX-1, canonical Stories,
-superseded issues и готовность к Architect.
-Ничего не изменяй.
+Show BA status for PRX-1: canonical Stories,
+superseded issues, and Architect readiness.
+Do not change anything.
 ```
 
 After apply, Architect can start from artifacts without the BA plugin remaining installed. See [Architect only](/workflows/architect-only).

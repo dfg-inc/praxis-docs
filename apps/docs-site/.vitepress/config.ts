@@ -8,13 +8,6 @@ const enNav = [
   { text: "Reference", link: "/reference/configuration" },
 ];
 
-const ruNav = [
-  { text: "Начало работы", link: "/ru/getting-started/installation" },
-  { text: "Плагины", link: "/ru/plugins/overview" },
-  { text: "Сценарий", link: "/ru/workflows/full-e2e" },
-  { text: "Справка", link: "/ru/reference/troubleshooting" },
-];
-
 const enSidebar = {
   "/getting-started/": [
     { text: "Overview", link: "/getting-started/overview" },
@@ -61,55 +54,25 @@ const enSidebar = {
   ],
 };
 
-const ruSidebar = {
-  "/ru/": [
-    { text: "Обзор", link: "/ru/" },
-    { text: "Установка", link: "/ru/getting-started/installation" },
-    { text: "Учётные данные Jira", link: "/ru/getting-started/credentials" },
-    { text: "Плагины ролей", link: "/ru/plugins/overview" },
-    { text: "Полный сценарий", link: "/ru/workflows/full-e2e" },
-    { text: "Диагностика", link: "/ru/reference/troubleshooting" },
-  ],
-};
-
 export default defineConfig({
   title: "Praxis Docs",
   description: "Install and use Praxis with Claude Desktop and Cowork",
   srcDir: "../../docs/user",
   lastUpdated: true,
-  locales: {
-    root: {
-      label: "English",
-      lang: "en",
-      themeConfig: {
-        nav: enNav,
-        sidebar: {
-          ...enSidebar,
-          "/": [
-            { text: "Getting started", items: enSidebar["/getting-started/"] },
-            { text: "Concepts", items: enSidebar["/concepts/"] },
-            { text: "Plugins", items: enSidebar["/plugins/"] },
-            { text: "Workflows", items: enSidebar["/workflows/"] },
-            { text: "Reference", items: enSidebar["/reference/"] },
-          ],
-        },
-        outline: { level: [2, 3] },
-        search: { provider: "local" },
-        socialLinks: [],
-      },
-    },
-    ru: {
-      label: "Русский",
-      lang: "ru",
-      link: "/ru/",
-      themeConfig: {
-        nav: ruNav,
-        sidebar: ruSidebar,
-        search: { provider: "local" },
-      },
-    },
-  },
   themeConfig: {
+    nav: enNav,
+    sidebar: {
+      ...enSidebar,
+      "/": [
+        { text: "Getting started", items: enSidebar["/getting-started/"] },
+        { text: "Concepts", items: enSidebar["/concepts/"] },
+        { text: "Plugins", items: enSidebar["/plugins/"] },
+        { text: "Workflows", items: enSidebar["/workflows/"] },
+        { text: "Reference", items: enSidebar["/reference/"] },
+      ],
+    },
+    outline: { level: [2, 3] },
     search: { provider: "local" },
+    socialLinks: [],
   },
 });

@@ -38,36 +38,36 @@ If verification fails, complete is refused (no readyForQuality, no Done).
 Status (READ ONLY):
 
 ```
-Проверь Developer status для WP-20260914-002.
-Покажи Jira mapping, active claim и readiness.
-Ничего не изменяй.
+Check Developer status for WP-20260914-002.
+Show Jira mapping, active claim, and readiness.
+Do not change anything.
 ```
 
 Claim (PREVIEW then WRITE):
 
 ```
-Подготовь Developer claim для WP-20260914-002.
-Сначала покажи текущий Jira status и доступный
-transition для START_DEVELOPMENT.
-Не вызывай claim без подтверждения.
+Prepare a Developer claim for WP-20260914-002.
+First show the current Jira status and the available
+START_DEVELOPMENT transition.
+Do not call claim without confirmation.
 ```
 
 Implement:
 
 ```
-Реализуй только утверждённый change-spec.
-Сохрани существующие изменения.
-Запусти предусмотренные проектом тесты.
-Покажи diff и verification results.
+Implement only the approved change-spec.
+Keep existing changes.
+Run the project's configured tests.
+Show the diff and verification results.
 ```
 
 Complete (WRITE, not Done):
 
 ```
-Подготовь Developer completion и Quality handoff.
-Покажи evidence и ожидаемые Jira writes.
-Не запускай Quality автоматически.
-Не переводи Jira в Готово.
+Prepare Developer completion and the Quality handoff.
+Show evidence and expected Jira writes.
+Do not start Quality automatically.
+Do not move Jira to Done.
 ```
 
 Premature Done recovery is a **separate** preview/apply (`praxis_developer_complete_recovery_*`). Never auto-repair live Jira during install or tests.

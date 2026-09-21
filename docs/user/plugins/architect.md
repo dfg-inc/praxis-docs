@@ -21,8 +21,8 @@ In Praxis acceptance, Epic `PRX-1`, Story `PRX-3`, WP `WP-20260914-002` → Jira
 Start (READ then PREVIEW):
 
 ```
-Продолжи PRX-1 как архитектор. Подготовь дизайн и Work Package WP-20260914-002.
-Сначала покажи preview. Не создавай Jira issues без подтверждения.
+Continue PRX-1 as Architect. Prepare the design and Work Package WP-20260914-002.
+Show the preview first. Do not create Jira issues without confirmation.
 ```
 
 One WP:
@@ -35,11 +35,11 @@ Show the Architect preview and wait.
 Approved apply (WRITE):
 
 ```
-Подтверждаю Architect apply только для показанного WP и fingerprint.
+I confirm Architect apply only for the shown WP and fingerprint.
 ```
 
 Resume:
 
 ```
-Покажи Architect status для PRX-1 и WP-20260914-002. Ничего не изменяй.
+Show Architect status for PRX-1 and WP-20260914-002. Do not change anything.
 ```

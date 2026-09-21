@@ -21,7 +21,11 @@ Ordinary users should not edit Praxis source to work around a defect. Distinguis
 | Claim conflict | data | Other actor holds claim |
 | Complete moved Jira to **Готово** without QA | **product bug alpha.34** | Do not treat `completed=true` as success. Use recovery **preview**, separate YES, then complete/evidence. Manual live repair is **not** automatic |
 | Missing completion evidence / Quality handoff | follows alpha.34 | Developer complete (alpha.35+) or gated recovery |
-| Quality runtime unhealthy | Quality-only | Does not block BA/Architect/Developer |
+| Quality runtime unhealthy / not_started | Quality-only | Call `praxis_quality_ensure`. Does not block BA/Architect/Developer |
+| `QUALITY_PACKAGE_MISSING` | product/distribution | Runtime MCPB must include `server/praxis-quality.cjs`. Reinstall current Runtime. Do not `npm start` |
+| `QUALITY_STARTUP_FAILED` / `QUALITY_PROCESS_EXITED` | product/host | Read `logPath` under `.praxis-quality/`. Node 22+ is required for SQLite. Do not edit Praxis source |
+| `QUALITY_PORT_UNAVAILABLE` | config | Another process owns 8792. Stop the other service or set a free `PRAXIS_QUALITY_PORT` only if you are debugging |
+| `QUALITY_HEALTH_TIMEOUT` / `QUALITY_DB_INIT_FAILED` | product/host | Bounded wait failed. Retry ensure; check `.praxis-quality/quality.log` |
 | `LOCAL_RUNTIME_UNAVAILABLE` | config | Cowork local access + folder |
 | Stale preview fingerprint | expected | New preview |
 
