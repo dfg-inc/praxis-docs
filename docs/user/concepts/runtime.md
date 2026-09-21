@@ -8,7 +8,7 @@ Praxis Runtime is the single local MCP server used by every role plugin.
 
 Claude Desktop does **not** reliably inherit `launchctl setenv` or shell `.env` into the MCP child. That path failed after alpha.30. Desktop users configure `user_config`, not environment inheritance.
 
-Quality is a sibling process started by `praxis_quality_ensure` from `server/praxis-quality.cjs` in the same MCPB. Users do not start it themselves, and they do not install Node or SQLite for it.
+Quality is started by `praxis_quality_ensure` from `server/praxis-quality.cjs` in the same MCPB. In Claude Desktop it runs inside the Runtime process. Under a normal `node` CLI it is a detached child. Users do not start it themselves, and they do not install Node or SQLite for it.
 
 CLI and CI still use `PRAXIS_JIRA_*`. That is not the ordinary Desktop install.
 

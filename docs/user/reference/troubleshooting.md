@@ -24,6 +24,7 @@ Ordinary users should not edit Praxis source to work around a defect. Distinguis
 | Quality runtime unhealthy / not_started | Quality-only | Call `praxis_quality_ensure`. Does not block BA/Architect/Developer |
 | `QUALITY_PACKAGE_MISSING` | product/distribution | Runtime MCPB must include `server/praxis-quality.cjs`. Reinstall current Runtime. Do not `npm start` |
 | `QUALITY_STARTUP_FAILED` / `QUALITY_PROCESS_EXITED` | product/host | Read `stage`, `nodeExecutable`, `exitCode`, and `logPath` under `.praxis-quality/`. Do not install Node or SQLite by hand. Do not edit Praxis source |
+| `QUALITY_SPAWN_FAILED` / `QUALITY_EXECUTABLE_NOT_FOUND` / `QUALITY_EXECUTABLE_NOT_PERMITTED` | product/host | Quality could not start a child runtime. Reinstall current Runtime (alpha.38+). Do not install Node by hand |
 | `QUALITY_SQLITE_UNAVAILABLE` / `QUALITY_SQLITE_MODULE_LOAD_FAILED` | product/host | The Desktop Node child could not load `node:sqlite`; current Runtime should fall back to packaged sql.js. Reinstall alpha.37+ Runtime. Do not `npm install sqlite3` |
 | `QUALITY_CHILD_RUNTIME_MISMATCH` | product/host | MCP Runtime and Quality child used incompatible executables. Reinstall current Runtime. Do not point PATH at a homemade Node |
 | `QUALITY_PORT_UNAVAILABLE` | config | Another process owns 8792. Stop the other service or set a free `PRAXIS_QUALITY_PORT` only if you are debugging |

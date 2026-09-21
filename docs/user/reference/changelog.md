@@ -2,6 +2,12 @@
 
 User-facing notes. Marketplace keeps its own catalog changelog as well; both should describe the same install model.
 
+## 0.1.0-alpha.38
+
+- Quality starts inside the Claude Desktop Runtime when the Desktop executable is not a Node CLI (no user-installed Node)
+- Spawn failures wait for the real `error`/`exit` events instead of reporting only “did not return a pid”
+- Packaged sql.js WASM from alpha.37 remains the SQLite fallback
+
 ## 0.1.0-alpha.37
 
 - Quality starts from the installed Runtime MCPB without a user-installed Node or SQLite
