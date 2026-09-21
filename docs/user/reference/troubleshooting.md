@@ -27,6 +27,7 @@ Ordinary users should not edit Praxis source to work around a defect. Distinguis
 | `QUALITY_SPAWN_FAILED` / `QUALITY_EXECUTABLE_NOT_FOUND` / `QUALITY_EXECUTABLE_NOT_PERMITTED` | product/host | Quality could not start a child runtime. Reinstall current Runtime (alpha.38+). Do not install Node by hand |
 | `QUALITY_SQLITE_UNAVAILABLE` / `QUALITY_SQLITE_MODULE_LOAD_FAILED` | product/host | The Desktop Node child could not load `node:sqlite`; current Runtime should fall back to packaged sql.js. Reinstall alpha.37+ Runtime. Do not `npm install sqlite3` |
 | `QUALITY_CHILD_RUNTIME_MISMATCH` | product/host | MCP Runtime and Quality child used incompatible executables. Reinstall current Runtime. Do not point PATH at a homemade Node |
+| `GITHUB_API_URL_INVALID` | config | Runtime GitHub API URL must be `https://api.github.com` (or `https://HOST/api/v3`). An SSH git remote is not an API URL |
 | `GIT_REMOTE_REQUIRED` | config | Connect Git after the user names a URL. Do not guess GitHub/GitLab |
 | `GIT_IDENTITY_REQUIRED` | config | Set Git user.name/email (preview + YES). Do not copy Jira email silently |
 | `GIT_QUALITY_SNAPSHOT_MISMATCH` | data | Files changed since QA. New Quality Review; do not Apply from Git |

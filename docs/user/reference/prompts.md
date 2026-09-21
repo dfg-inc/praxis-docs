@@ -153,7 +153,17 @@ Do not change anything.
 ```
 Prepare connecting this repo to
 https://github.com/hisagedru/praxis-acceptance-test
-Show the preview. Do not add the remote yet.
+If origin is already HTTPS, preview switching it to
+git@github.com:hisagedru/praxis-acceptance-test.git
+Show the preview. Do not add or rewrite the remote yet.
+```
+
+**WRITE — Connect origin SSH**
+
+```
+I confirm the Connect Git fingerprint only.
+Change origin to git@github.com:hisagedru/praxis-acceptance-test.git
+Do not add a second remote. Do not push.
 ```
 
 **PREVIEW — Git Delivery**

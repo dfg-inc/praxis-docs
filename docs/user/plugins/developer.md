@@ -83,7 +83,7 @@ After Quality Apply, deliver approved product files through Claude — not by ty
 ### Flow
 
 1. **Git Status** (`praxis_developer_git_status`) — remotes, identity, dirty tree. If `remoteConfigured=false`, ask the user for the target URL.
-2. **Connect Git** — preview then `confirmation=YES` to `git remote add`. Does not create a GitHub repository.
+2. **Connect Git** — preview then `confirmation=YES`. Adds `origin` or **updates** it (`git remote set-url`) when HTTPS↔SSH for the same repo. Does not create a GitHub repository. Does not add a second `origin`. The apply result keeps the approved `previewFingerprint`. `wrote=true` only after the actual remote URL matches the plan.
 3. **Prepare Git Delivery** (`praxis_developer_git_preview`) — recompute file hashes and compare to the Quality Review snapshot. Preview does not branch or commit.
 4. **Commit Approved Changes** (`praxis_developer_git_commit`) — feature branch + allowlist only. Default for the counter WP: `src/counter.js`, `src/counter.test.js`. Never `git add -A`.
 5. **Publish Branch** (`praxis_developer_git_publish` / `praxis_developer_git_publish_preview`) — if the GitHub repo is empty, human-gated **baseline** push first, then the feature branch. **Never force-push.**
@@ -122,7 +122,9 @@ Do not change anything.
 Prepare connecting this repo to
 https://github.com/hisagedru/praxis-acceptance-test
 as origin over HTTPS or SSH.
-Show the preview. Do not add the remote yet.
+If origin already exists over HTTPS, preview switching it to
+git@github.com:hisagedru/praxis-acceptance-test.git
+Show the preview. Do not add or rewrite the remote yet.
 ```
 
 **WRITE — commit then publish then PR**

@@ -281,7 +281,7 @@ Do not write Jira.
 
 - **Skill:** Connect Git
 - **Approval:** YES + connect fingerprint
-- **Writes:** `git remote add` only
+- **Writes:** `git remote add` or `git remote set-url` (HTTPS ↔ SSH on the same origin). Never a second `origin`. Never push. Re-read the actual URL after apply.
 
 ### STEP 23 — Commit approved files
 

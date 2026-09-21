@@ -59,6 +59,8 @@ You should see **one** Praxis Runtime process, not one per role.
 | Jira API Token | `jira_token` | *(paste only in this field)* | **yes** |
 | GitHub Token (Git Delivery) | `github_token` | *(optional PAT, not OAuth)* | **yes** |
 | GitHub API URL | `github_api_url` | `https://api.github.com` | no |
+
+Do not put `git@github.com:owner/repo.git` in GitHub API URL. That is the Connect Git remote.
 | GitLab Token | `gitlab_token` | *(optional)* | **yes** |
 | GitLab Base URL | `gitlab_base_url` | `https://gitlab.example.com` | no |
 

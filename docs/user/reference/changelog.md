@@ -2,6 +2,13 @@
 
 User-facing notes. Marketplace keeps its own catalog changelog as well; both should describe the same install model.
 
+## 0.1.0-alpha.43
+
+- Connect Git updates `origin` when switching HTTPS ↔ SSH for the same GitHub repository (`git remote set-url`). Same repository identity is no longer treated as “already connected”
+- `wrote=true` only after the actual remote URL matches the approved plan; apply keeps the approved `previewFingerprint`
+- Git Status copies GitHub API `empty` onto `remoteEmpty` and `baselineRequired`; API failure stays unknown (`null`), not `false`
+- Doctor rejects a git remote pasted into `github_api_url`
+
 ## 0.1.0-alpha.42
 
 - Developer Git Delivery: GitHub Pull Request MVP (status, connect, snapshot-bound commit, baseline/feature push, PR)

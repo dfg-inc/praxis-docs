@@ -47,6 +47,8 @@ GitHub is the alpha.42 MVP for Push / Pull Request.
 | GitHub Token | `github_token` | **yes** |
 | GitHub API URL | `github_api_url` | no (default `https://api.github.com`) |
 
+`github_api_url` must be the **API** origin: `https://api.github.com` (GitHub Enterprise: `https://HOST/api/v3`). It is **not** a git remote. Do not paste `git@github.com:owner/repo.git` or `https://github.com/owner/repo.git` into this field — those belong in Connect Git. Doctor reports `GITHUB_API_URL_INVALID` when the value looks like a git remote. Doctor never prints the GitHub token.
+
 Create a **classic or fine-grained PAT** with `repo` (and `workflow` if you need Actions writes). This is **not** OAuth.
 
 1. GitHub → Settings → Developer settings → Personal access tokens.
