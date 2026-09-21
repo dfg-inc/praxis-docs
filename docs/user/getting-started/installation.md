@@ -57,6 +57,10 @@ You should see **one** Praxis Runtime process, not one per role.
 | Jira Email | `jira_email` | `user@example.com` | no |
 | Jira Project Key | `jira_project_key` | `PRX` | no |
 | Jira API Token | `jira_token` | *(paste only in this field)* | **yes** |
+| GitHub Token (Git Delivery) | `github_token` | *(optional PAT, not OAuth)* | **yes** |
+| GitHub API URL | `github_api_url` | `https://api.github.com` | no |
+| GitLab Token | `gitlab_token` | *(optional)* | **yes** |
+| GitLab Base URL | `gitlab_base_url` | `https://gitlab.example.com` | no |
 
 4. **Save**.
 

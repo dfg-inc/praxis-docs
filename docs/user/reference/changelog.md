@@ -2,6 +2,12 @@
 
 User-facing notes. Marketplace keeps its own catalog changelog as well; both should describe the same install model.
 
+## 0.1.0-alpha.42
+
+- Developer Git Delivery: GitHub Pull Request MVP (status, connect, snapshot-bound commit, baseline/feature push, PR)
+- GitLab remotes and Merge Requests remain supported; GitHub live Desktop delivery is a separate manual gate
+- Git tokens use Runtime `user_config` (`github_token`, optional `gitlab_token`); never chat or `.project`
+
 ## 0.1.0-alpha.41
 
 - Developer status reads canonical `qualityState` from `praxis.state` and the local WP manifest, not `status=ready-for-qa`

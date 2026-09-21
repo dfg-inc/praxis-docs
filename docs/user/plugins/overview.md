@@ -5,7 +5,7 @@ Install **Praxis Runtime** once. Then install **only** the ZIP for the role you 
 | | BA | Architect | Developer | Quality |
 |--|----|-----------|-----------|---------|
 | ZIP | `praxis-ba.zip` | `praxis-architect.zip` | `praxis-developer.zip` | `praxis-quality.zip` |
-| Does | Requirements, AC, Stories | Design, WP, Jira materialize | Claim, implement, verify, complete | Review, bugs, Done |
+| Does | Requirements, AC, Stories | Design, WP, Jira materialize | Claim, implement, verify, complete, Git Delivery | Review, bugs, Done |
 | Needs (data) | Jira Epic | BA artifacts/handoff (files or Jira) | WP + Architect handoff files | Developer evidence + quality handoff files |
 | Needs (install) | Runtime | Runtime | Runtime | Runtime |
 | Writes Jira | After BA apply | After Architect apply | Claim / complete metadata (not Done) | Bugs + Done on pass |

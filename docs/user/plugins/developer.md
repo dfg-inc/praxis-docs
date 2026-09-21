@@ -2,7 +2,7 @@
 
 **Install:** Runtime + `praxis-developer.zip`. Architect ZIP is not required if `design/<WP>/` already exists.
 
-**Does:** Status, claim, implementation of the approved change-spec, tests, **Developer complete**, Quality handoff.
+**Does:** Status, claim, implementation of the approved change-spec, tests, **Developer complete**, Quality handoff, then **Git Delivery** (GitHub Pull Request MVP).
 
 **Inputs:** Work Package id or Jira key, Architect handoff, change-spec.
 
@@ -73,3 +73,64 @@ Do not move Jira to Done.
 ```
 
 Premature Done recovery is a **separate** preview/apply (`praxis_developer_complete_recovery_*`). Never auto-repair live Jira during install or tests.
+
+## Git Delivery (alpha.42)
+
+After Quality Apply, deliver approved product files through Claude — not by typing Git in a terminal.
+
+**GitHub is the MVP provider** (HTTPS or SSH transport + GitHub API token for Pull Requests). GitLab.com / Self-Managed remain available for remotes and Merge Requests. Praxis does **not** guess `github.com`, `gl.jetru.by`, or any other host from Jira.
+
+### Flow
+
+1. **Git Status** (`praxis_developer_git_status`) — remotes, identity, dirty tree. If `remoteConfigured=false`, ask the user for the target URL.
+2. **Connect Git** — preview then `confirmation=YES` to `git remote add`. Does not create a GitHub repository.
+3. **Prepare Git Delivery** (`praxis_developer_git_preview`) — recompute file hashes and compare to the Quality Review snapshot. Preview does not branch or commit.
+4. **Commit Approved Changes** (`praxis_developer_git_commit`) — feature branch + allowlist only. Default for the counter WP: `src/counter.js`, `src/counter.test.js`. Never `git add -A`.
+5. **Publish Branch** (`praxis_developer_git_publish` / `praxis_developer_git_publish_preview`) — if the GitHub repo is empty, human-gated **baseline** push first, then the feature branch. **Never force-push.**
+6. **Create Merge Request** (`praxis_developer_git_merge_request`) — GitHub Pull Request (or GitLab MR). Reuses an existing PR. Does not merge. Does not claim CI PASS.
+7. **Check Delivery Status** — journal: commit SHA, PR URL, `deliveryState=awaiting-review`.
+
+Jira linking (`praxis_developer_git_link_jira_*`) is a **separate** comment. It does not move PRX-4 out of Done or re-run Quality Apply.
+
+### Staging
+
+Not staged unless you opt in: `.praxis-jira/`, `.praxis-quality/`, `.praxis-git/`, `.praxis-local-tgz/`, `.npmrc`, SQLite, pid/log files, unknown untracked files. `.project`, `design/`, `work-packages/` need an explicit allowlist choice.
+
+### Auth
+
+| Kind | How |
+|------|-----|
+| Git transport | macOS/Windows SSH agent or Git credential helper. Praxis never asks for a private key. |
+| GitHub API | Runtime setting `github_token` (PAT, **not** OAuth). Stored in OS keychain. |
+| GitLab API | Optional `gitlab_token` + `gitlab_base_url` (Self-Managed: User Settings → Access Tokens). |
+
+Tokens must not appear in `.project`, Git, Markdown, evidence, handoff, tool results, logs, or chat.
+
+### Prompts
+
+**READ ONLY — Git Status**
+
+```
+Check Git Delivery status for WP-20260914-002.
+If there is no remote, say so. Do not guess a GitHub URL.
+Do not change anything.
+```
+
+**PREVIEW — Connect GitHub**
+
+```
+Prepare connecting this repo to
+https://github.com/hisagedru/praxis-acceptance-test
+as origin over HTTPS or SSH.
+Show the preview. Do not add the remote yet.
+```
+
+**WRITE — commit then publish then PR**
+
+```
+I confirm Git Delivery commit for the shown fingerprint only.
+Do not push until I approve publish.
+Do not open a pull request until I approve that step.
+Do not merge. Do not write Jira.
+```
+

@@ -269,3 +269,28 @@ Do not write Jira.
 - **Expected:** Done only after Quality; evidence + handoff still on disk
 - **Approval:** none
 - **Verify:** Story `PRX-3` (example) still canonical; WP `PRX-4` Done
+
+### STEP 21 — Git Status
+
+- **Plugin:** Developer
+- **Skill:** Git Status
+- **Prompt:** “Check Git Delivery for WP-20260914-002. Read-only.”
+- **Expected:** `remoteConfigured=false` until the user names a GitHub URL. No Jira writes.
+
+### STEP 22 — Connect GitHub
+
+- **Skill:** Connect Git
+- **Approval:** YES + connect fingerprint
+- **Writes:** `git remote add` only
+
+### STEP 23 — Commit approved files
+
+- **Skill:** Prepare Git Delivery then Commit Approved Changes
+- **Expected:** hashes match Quality Review snapshot; only allowlist files committed
+
+### STEP 24 — Publish and Pull Request
+
+- **Skill:** Publish Branch then Create Merge Request
+- **Empty GitHub repo:** baseline publish first, then feature branch, then PR
+- **Never:** force-push, merge, fabricate CI PASS, transition PRX-4
+

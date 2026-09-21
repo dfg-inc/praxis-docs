@@ -27,7 +27,12 @@ Ordinary users should not edit Praxis source to work around a defect. Distinguis
 | `QUALITY_SPAWN_FAILED` / `QUALITY_EXECUTABLE_NOT_FOUND` / `QUALITY_EXECUTABLE_NOT_PERMITTED` | product/host | Quality could not start a child runtime. Reinstall current Runtime (alpha.38+). Do not install Node by hand |
 | `QUALITY_SQLITE_UNAVAILABLE` / `QUALITY_SQLITE_MODULE_LOAD_FAILED` | product/host | The Desktop Node child could not load `node:sqlite`; current Runtime should fall back to packaged sql.js. Reinstall alpha.37+ Runtime. Do not `npm install sqlite3` |
 | `QUALITY_CHILD_RUNTIME_MISMATCH` | product/host | MCP Runtime and Quality child used incompatible executables. Reinstall current Runtime. Do not point PATH at a homemade Node |
-| `QUALITY_PORT_UNAVAILABLE` | config | Another process owns 8792. Stop the other service or set a free `PRAXIS_QUALITY_PORT` only if you are debugging |
+| `GIT_REMOTE_REQUIRED` | config | Connect Git after the user names a URL. Do not guess GitHub/GitLab |
+| `GIT_IDENTITY_REQUIRED` | config | Set Git user.name/email (preview + YES). Do not copy Jira email silently |
+| `GIT_QUALITY_SNAPSHOT_MISMATCH` | data | Files changed since QA. New Quality Review; do not Apply from Git |
+| `GIT_BASELINE_REQUIRED` | data | Empty GitHub repo needs approved baseline push before a PR |
+| `GIT_FORCE_PUSH_FORBIDDEN` / remote history conflict | safety | Praxis never force-pushes |
+| `GITHUB_TOKEN_UNAVAILABLE` | config | Runtime GitHub Token (PAT). Never paste into chat |
 | `QUALITY_HEALTH_TIMEOUT` / `QUALITY_DB_INIT_FAILED` | product/host | Bounded wait failed. Retry ensure; check `.praxis-quality/quality.log` |
 | `LOCAL_RUNTIME_UNAVAILABLE` | config | Cowork local access + folder |
 | Stale preview fingerprint | expected | New preview. Do not apply an older hash after generating a new preview (including after a Runtime upgrade). |

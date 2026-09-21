@@ -1,8 +1,8 @@
 # Secrets
 
-Runtime keys: `jira_base_url`, `jira_email`, `jira_project_key`, `jira_token`.
+Runtime keys: `jira_base_url`, `jira_email`, `jira_project_key`, `jira_token`, optional `github_token`, `github_api_url`, `gitlab_token`, `gitlab_base_url`.
 
-`jira_token` is sensitive. Configure it only in Claude Desktop Runtime settings.
+`jira_token`, `github_token`, and `gitlab_token` are sensitive. Configure them only in Claude Desktop Runtime settings. They are PATs, not OAuth.
 
 Do **not** put API tokens in:
 

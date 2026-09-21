@@ -140,6 +140,39 @@ confirmation=YES. Do not start Quality.
 Resume Developer work on WP-20260914-002. Status first. No writes.
 ```
 
+**READ ONLY — Git Status**
+
+```
+Check Git Delivery status for WP-20260914-002.
+If there is no remote, say so. Do not guess a GitHub URL.
+Do not change anything.
+```
+
+**PREVIEW — Connect GitHub**
+
+```
+Prepare connecting this repo to
+https://github.com/hisagedru/praxis-acceptance-test
+Show the preview. Do not add the remote yet.
+```
+
+**PREVIEW — Git Delivery**
+
+```
+Prepare Git Delivery for WP-20260914-002.
+Recompute hashes against Quality Review 1.
+Do not create a branch or commit.
+```
+
+**WRITE — commit / publish / PR (separate approvals)**
+
+```
+I confirm only the shown Git commit fingerprint.
+Do not push until I approve publish.
+Do not open a pull request until I approve that step.
+Do not merge. Do not write Jira.
+```
+
 ## Quality
 
 **READ ONLY — status**

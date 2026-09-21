@@ -38,6 +38,31 @@ Create or revoke tokens at: [https://id.atlassian.com/manage-profile/security/ap
 
 Do not commit tokens. Do not put them in `.project`, chat, prompts, Marketplace forms, or screenshots.
 
+## GitHub credentials (Git Delivery)
+
+GitHub is the alpha.42 MVP for Push / Pull Request.
+
+| Field | `user_config` | Secret |
+|-------|----------------|--------|
+| GitHub Token | `github_token` | **yes** |
+| GitHub API URL | `github_api_url` | no (default `https://api.github.com`) |
+
+Create a **classic or fine-grained PAT** with `repo` (and `workflow` if you need Actions writes). This is **not** OAuth.
+
+1. GitHub → Settings → Developer settings → Personal access tokens.
+2. Generate a token. Copy it once.
+3. Paste only into Claude Desktop → Settings → Extensions → Praxis Runtime → **GitHub Token**.
+4. Save.
+
+SSH transport uses your existing `ssh-agent` keys (`git@github.com:owner/repo.git`). Praxis never asks for the private key file.
+
+## GitLab credentials (optional)
+
+Self-Managed: sign in to your GitLab → **User Settings → Access Tokens** → create a token with `api` scope. Paste it only into Runtime **GitLab Token**. Set **GitLab Base URL** to `https://gitlab.example.com` (no slash, not a Jira URL).
+
+GitLab.com tokens: [https://gitlab.com/-/user_settings/personal_access_tokens](https://gitlab.com/-/user_settings/personal_access_tokens).
+
+
 ## Permissions
 
 Roles need different Jira rights. See [Jira permissions](/reference/permissions). Read-only tools (`praxis_ba_status`, `praxis_developer_status`, …) need browse/read. Apply tools need create/transition/comment rights **and** a human `confirmation=YES`.
