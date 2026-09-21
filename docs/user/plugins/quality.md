@@ -10,6 +10,8 @@ The Quality HTTP service is **bundled inside Praxis Runtime** (`server/praxis-qu
 
 Claude Desktop already runs Praxis Runtime as JavaScript. `praxis_quality_ensure` starts Quality **inside that Runtime** (a worker thread) when the Desktop executable is not an ordinary Node CLI. You do not install Node 22/24 and you do not start a service in Terminal.
 
+If built-in `node:sqlite` is unavailable, Quality uses packaged **sql.js** WASM. No separate SQLite install.
+
 On machines where Praxis runs under a normal `node` binary (CLI, CI), Quality is still a detached child process.
 
 | Tool | What it does |
