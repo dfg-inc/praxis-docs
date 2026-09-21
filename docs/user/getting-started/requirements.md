@@ -9,7 +9,7 @@
 
 ## You do not need (ordinary Desktop install)
 
-- Node.js, npm, Make, or Docker
+- Node.js, npm, Make, Docker, or SQLite
 - Editing Praxis source
 - `launchctl setenv`
 - A repository `.env` file

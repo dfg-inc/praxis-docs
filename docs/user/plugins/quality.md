@@ -4,9 +4,11 @@
 
 **Does:** Ensure the Quality HTTP service, inspect Developer evidence/handoff/AC, run project tests, pass/fail/block, optional bugs, **Done** on approval.
 
-## Quality service (alpha.36)
+## Quality service (alpha.37)
 
-The Quality HTTP service is **bundled inside Praxis Runtime** (`server/praxis-quality.cjs` in the MCPB). Ordinary users do not install npm packages, run `make quality-up`, or start a Node server.
+The Quality HTTP service is **bundled inside Praxis Runtime** (`server/praxis-quality.cjs` plus `server/sql-wasm.wasm` in the MCPB). Ordinary users do **not** install Node.js, SQLite, npm packages, or start a background process.
+
+Claude Desktop provides the JavaScript runtime that launches the MCPB. Praxis then starts Quality from that same Runtime and uses `node:sqlite` when the child actually has it, or a packaged sql.js SQLite engine when it does not.
 
 | Tool | What it does |
 |------|----------------|
@@ -18,9 +20,11 @@ The Quality HTTP service is **bundled inside Praxis Runtime** (`server/praxis-qu
 
 **Healthy** means the service answered `/health` for **this** repository. **Unavailable / not_started** means it is not running yet — call ensure. That is not a reason to stop BA/Architect/Developer.
 
-On failure, Praxis returns a structured code (`QUALITY_PACKAGE_MISSING`, `QUALITY_STARTUP_FAILED`, `QUALITY_PROCESS_EXITED`, `QUALITY_PORT_UNAVAILABLE`, `QUALITY_DB_INIT_FAILED`, `QUALITY_HEALTH_TIMEOUT`) with `stage`, `durationMs`, `healthUrl`, and `logPath` when available. Do not edit Praxis source to work around a startup defect.
+On failure, Praxis returns a structured code (`QUALITY_PACKAGE_MISSING`, `QUALITY_STARTUP_FAILED`, `QUALITY_PROCESS_EXITED`, `QUALITY_PORT_UNAVAILABLE`, `QUALITY_DB_INIT_FAILED`, `QUALITY_HEALTH_TIMEOUT`, `QUALITY_SQLITE_UNAVAILABLE`, `QUALITY_SQLITE_MODULE_LOAD_FAILED`, `QUALITY_CHILD_RUNTIME_MISMATCH`, `QUALITY_NODE_UNSUPPORTED`) with `stage`, `nodeVersion`, `nodeExecutable`, `moduleLoadErrorCode`, `exitCode`, `durationMs`, and `logPath` when available. A load error is **not** reported as “requires Node.js 22+”. Do not edit Praxis source to work around a startup defect.
 
-SQLite is created at `.praxis-quality/quality.sqlite` **only after** a successful start.
+SQLite is created at `.praxis-quality/quality.sqlite` **only after** a successful start. The service listens on port **8792** (`http://127.0.0.1:8792/health`) unless `PRAXIS_QUALITY_PORT` is set for debugging.
+
+A second `praxis_quality_ensure` on a healthy service returns `reused=true` and keeps the same process.
 
 **Jira writes:** After preview of findings. `praxis_quality_review` with `confirmation=YES`. Passing review is what may transition Jira to **Done** (localized name **Готово** on some sites).
 

@@ -2,6 +2,13 @@
 
 User-facing notes. Marketplace keeps its own catalog changelog as well; both should describe the same install model.
 
+## 0.1.0-alpha.37
+
+- Quality starts from the installed Runtime MCPB without a user-installed Node or SQLite
+- Desktop `node:sqlite` preflight no longer blocks ensure, and no longer maps every load error to “requires Node.js 22+”
+- Packaged sql.js WASM is the SQLite fallback when the Desktop child has no `node:sqlite`
+- Startup errors include `stage`, `nodeVersion`, `nodeExecutable`, `moduleLoadErrorCode`, `exitCode`, `durationMs`, `logPath`
+
 ## 0.1.0-alpha.36
 
 - Quality HTTP service is bundled in the Runtime MCPB (`server/praxis-quality.cjs`)

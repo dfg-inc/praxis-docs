@@ -1,5 +1,7 @@
 # FAQ
 
+**Do I need to install Node.js or SQLite?** No. Quality starts from the Runtime MCPB. Do not install Node 22/24 or a SQLite library to make `praxis_quality_ensure` work.
+
 **Do I install four Runtimes?** No.
 
 **Must I install all four role ZIPs?** No.
