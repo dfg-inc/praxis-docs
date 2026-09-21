@@ -50,7 +50,7 @@ Jira approval is a separate lifecycle:
 
 A PASSED review may then set the QA report, bookkeeping properties (`praxis.qualityAppliedReviewId`, `praxis.qualityCommentId`), managed comment, the **approved numeric transition** (not a silently chosen alternative Done transition), then `qualityState=approved`, and the local WP manifest. Quality SQLite is marked applied last.
 
-Apply rejects a stale preview if Jira status, the approved transition id, or its target changed **before the first write**. Retry the **same** fingerprint after a partial Apply: completed journal operations are skipped; a Done status is accepted only when this Apply recorded the transition. If Jira is already Done and the journal cannot prove this Apply did it, Praxis returns `QUALITY_RECONCILIATION_REQUIRED` instead of inventing success.
+Apply rejects a stale preview (`QUALITY_PREVIEW_STALE`) if Jira status, the approved transition id, or its target changed **before the first write**. Retry the **same** fingerprint after a partial Apply: completed journal operations are skipped; a Done status is accepted only when this Apply recorded the transition. If Jira is already Done and the journal cannot prove this Apply did it, Praxis returns `QUALITY_RECONCILIATION_REQUIRED` instead of inventing success.
 
 The MCP envelope for `praxis_quality_apply` is `ok=false` when `data.ok` is false (partial or postcondition failure). Check `data.pending`, `data.jiraTransitioned`, `data.localStateReconciled`, and `data.qualityStoreReconciled`.
 
