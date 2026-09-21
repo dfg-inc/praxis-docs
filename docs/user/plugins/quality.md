@@ -2,9 +2,9 @@
 
 **Install:** Runtime + `praxis-quality.zip`. Developer ZIP is not required if evidence and `developer.quality.handoff` already exist.
 
-**Does:** Ensure the Quality HTTP service, inspect Developer evidence/handoff/AC, run project tests, pass/fail/block, optional bugs, **Done** on approval.
+**Does:** Ensure the Quality HTTP service, run Quality Review (acceptance checks + own tests + persisted evidence), then a separate human-gated Quality Apply for Jira.
 
-## Quality service (alpha.38)
+## Quality service (alpha.38–alpha.39)
 
 The Quality HTTP service is **bundled inside Praxis Runtime** (`server/praxis-quality.cjs` plus `server/sql-wasm.wasm` in the MCPB). Ordinary users do **not** install Node.js, SQLite, npm packages, or start a background process.
 
@@ -16,9 +16,12 @@ On machines where Praxis runs under a normal `node` binary (CLI, CI), Quality is
 
 | Tool | What it does |
 |------|----------------|
-| `praxis_quality_status` | Read-only. `not_started` / `healthy` / `unavailable` / `failed`. Does **not** start the service. |
+| `praxis_quality_status` | Read-only. Runtime health plus latest review when `workPackage` is given. Does **not** start the service. |
 | `praxis_quality_ensure` | Starts the service if needed, waits for `/health`, reuses a healthy instance. Does **not** run review, create bugs, or mark Done. |
-| `praxis_quality_review` | Separate human-approved QA write. |
+| `praxis_quality_review` | Executes Quality Review through the Quality HTTP Service. Runs change-spec acceptance checks and the project's tests, persists QA evidence and Quality SQLite. Does **not** write Jira. No confirmation. |
+| `praxis_quality_report` | Safe alias of `praxis_quality_review`. Not a Jira write. |
+| `praxis_quality_apply_preview` | Read-only proposed Jira writes for the persisted review. Returns `previewFingerprint`. |
+| `praxis_quality_apply` | Writes the approved plan. Requires `confirmation=YES` and the current fingerprint. |
 
 **When it starts:** only when you (or the Quality Skill) call `praxis_quality_ensure`. Praxis Runtime startup does **not** start Quality. BA, Architect, and Developer do not need it.
 
@@ -30,7 +33,26 @@ SQLite is created at `.praxis-quality/quality.sqlite` **only after** a successfu
 
 A second `praxis_quality_ensure` on a healthy service returns `reused=true` and keeps the same process.
 
-**Jira writes:** After preview of findings. `praxis_quality_review` with `confirmation=YES`. Passing review is what may transition Jira to **Done** (localized name **Готово** on some sites).
+## Review vs apply
+
+Quality Review uses the real Quality Service (`POST /reviews/work-package`). It reads Developer evidence and the change-spec, executes every acceptance check, runs Quality's own `.project` `quality.test` command, and stores:
+
+- Quality SQLite `reviews` / `audits`
+- `design/<WP>/qa/quality-review.json`
+
+It does **not** transition Jira, post comments, set properties, or create Bugs.
+
+Jira approval is a separate lifecycle:
+
+1. `praxis_quality_apply_preview` — exact actions, discovered transition id, fingerprint
+2. Human approval
+3. `praxis_quality_apply` with `confirmation=YES` and that fingerprint
+
+A PASSED review may then set the QA report, managed comment, `qualityState=approved`, transition to **Done** (localized **Готово**), and reconcile the local WP manifest. Bugs are created only from previewed blocking findings on a FAILED review, using the numeric bug type id (never the display name «Баг»).
+
+Interrupted apply returns completed vs pending actions. Retry the same fingerprint; do not invent a new plan. A second apply of an already-applied review does not duplicate comments, Bugs, or transitions.
+
+If product source changes after review, the snapshot is stale: run a new review, then a new preview. Do not apply an old PASSED fingerprint.
 
 Readiness is **not** “Jira is Done”. Look at:
 
@@ -64,18 +86,26 @@ Find Developer evidence, the Quality handoff, and acceptance checks.
 Do not create bugs and do not change Jira.
 ```
 
-Review (PREVIEW then WRITE):
+Review (not Jira approval):
 
 ```
-Run Quality review only for WP-20260914-002.
-Check all acceptance criteria and the existing tests.
-Show evidence and proposed Jira actions before apply.
+Review WP-20260914-002.
+Run praxis_quality_review. Show the acceptance matrix, test counts, findings, and evidence.
+Do not write Jira.
 ```
 
-Approval (WRITE):
+Apply preview:
+
+```
+Show the Quality apply preview for WP-20260914-002.
+Do not apply and do not write Jira.
+```
+
+Apply (WRITE):
 
 ```
 I confirm only the shown Quality apply.
+Use confirmation=YES and the shown previewFingerprint.
 Do not perform extra Jira transitions
 or bug creation outside the approved plan.
 ```

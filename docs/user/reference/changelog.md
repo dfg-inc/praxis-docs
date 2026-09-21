@@ -2,6 +2,12 @@
 
 User-facing notes. Marketplace keeps its own catalog changelog as well; both should describe the same install model.
 
+## 0.1.0-alpha.39
+
+- Quality Review uses the bundled Quality HTTP Service, executes change-spec acceptance checks, and persists QA evidence / SQLite reviews
+- Review does not write Jira; Quality Apply Preview + human-gated Quality Apply perform Jira approval, Done, and Bugs
+- Local WP `qualityState` is reconciled on apply; retries are idempotent
+
 ## 0.1.0-alpha.38
 
 - Quality starts inside the Claude Desktop Runtime when the Desktop executable is not a Node CLI (no user-installed Node)

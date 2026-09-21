@@ -8,7 +8,7 @@ Praxis asks because Jira writes are easy to duplicate and hard to undo.
 |------|----------|----------------|
 | READ | `praxis_doctor`, `praxis_*_status`, `praxis_jira_epic` | none |
 | PREVIEW | `praxis_ba_preview`, `praxis_architect_preview`, recovery preview | none — must not write |
-| APPLY | `praxis_ba_apply`, `praxis_architect_apply`, `praxis_developer_claim`, `praxis_developer_complete`, `praxis_quality_review` | `confirmation=YES` and, where required, `previewFingerprint` |
+| APPLY | `praxis_ba_apply`, `praxis_architect_apply`, `praxis_developer_claim`, `praxis_developer_complete`, `praxis_quality_apply` | `confirmation=YES` and, where required, `previewFingerprint` |
 
 Saying “yes, do it” in chat does **not** satisfy the Runtime contract. The Skill must call the apply tool with `confirmation=YES` and the fingerprint from **that** preview.
 

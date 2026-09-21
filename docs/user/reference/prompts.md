@@ -168,9 +168,17 @@ Do not create bugs and do not change Jira.
 **PREVIEW — review**
 
 ```
-Run Quality review only for WP-20260914-002.
-Check all acceptance criteria and the existing tests.
-Show evidence and proposed Jira actions before apply.
+Review WP-20260914-002.
+Run praxis_quality_review.
+Check all acceptance criteria and Quality's own tests.
+Show evidence. Do not write Jira.
+```
+
+**PREVIEW — apply**
+
+```
+Show the Quality apply preview for WP-20260914-002.
+Do not apply.
 ```
 
 **PREVIEW — failed review / bugs**
@@ -179,16 +187,11 @@ Show evidence and proposed Jira actions before apply.
 Show proposed bugs (numeric type id, not the display name Bug). Do not create them.
 ```
 
-**WRITE — approved bugs**
-
-```
-I confirm only the shown bug creation and fingerprint/plan.
-```
-
-**WRITE — successful review / final approval**
+**WRITE — approved bugs / apply**
 
 ```
 I confirm only the shown Quality apply.
+confirmation=YES and the shown previewFingerprint.
 Do not perform extra Jira transitions
 or bug creation outside the approved plan.
 ```

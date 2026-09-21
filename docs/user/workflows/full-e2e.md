@@ -242,23 +242,24 @@ Do not move Jira to Done.
 - **Prompt:**
 
 ```
-Run Quality review only for WP-20260914-002.
-Check evidence, handoff, and tests.
-Show proposed Jira actions before apply.
+Review WP-20260914-002.
+Run praxis_quality_review.
+Show the four acceptance checks, Quality's own npm test, evidence, and SQLite review.
+Do not write Jira.
 ```
 
-- **Reads:** evidence, handoff, tests
-- **Writes:** none until YES
-- **Approval:** wait
-- **Verify:** proposed Done transition only on pass
+- **Reads:** evidence, handoff, change-spec, tests via Quality Service
+- **Writes:** local QA evidence and Quality SQLite only
+- **Approval:** none (review is not Jira approval)
+- **Verify:** PRX-4 remains In Progress; `jiraMutated=false`
 
-### STEP 19 — Quality approval or bug/revision
+### STEP 19 — Quality apply preview and approval
 
 - **Plugin:** Quality
-- **Prompt (WRITE):** “I confirm only the shown Quality apply.”
-- **Writes:** pass → Jira **Done** (localized **Готово**); fail → bugs / blocked, not silent Done
-- **Approval:** YES
-- **Verify:** bugs use numeric type id, not the display name Bug
+- **Prompt:** “Show the Quality apply preview.” Then, after you accept: “I confirm only the shown Quality apply.”
+- **Writes:** none on preview. Apply writes QA report, managed comment, qualityState, Done (**Готово**); fail → previewed bugs, not silent Done
+- **Approval:** YES + `previewFingerprint` on `praxis_quality_apply` only
+- **Verify:** bugs use numeric type id, not the display name Bug; local `qualityState` matches Jira
 
 ### STEP 20 — Final verification
 
