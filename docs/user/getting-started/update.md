@@ -11,4 +11,6 @@
 
 Role plugins must stay compatible with that Runtime. Mixing a new Developer ZIP with an old Runtime (or the reverse) is a frequent cause of missing tools.
 
+If a Quality Apply Preview was generated on the previous Runtime, generate a **new** preview after the update. Do not reuse the old fingerprint.
+
 Do not leave multiple Praxis Runtime copies enabled.

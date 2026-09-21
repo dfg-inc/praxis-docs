@@ -14,7 +14,7 @@ Saying “yes, do it” in chat does **not** satisfy the Runtime contract. The S
 
 ## What YES means
 
-You accept **exactly** the previewed Jira creates/updates/transitions. Reject by not calling apply. Resume later with a fresh preview if the fingerprint is stale.
+You accept **exactly** the previewed Jira creates/updates/transitions. Reject by not calling apply. If Jira changed **before** this Apply, generate a new preview. If Apply was partial, retry the **same** fingerprint — do not generate a new preview just to “try again”.
 
 ## Examples
 
@@ -26,7 +26,7 @@ You accept **exactly** the previewed Jira creates/updates/transitions. Reject by
 
 **Developer complete:** “I confirm complete and the Quality handoff. Do not start Quality and do not move Jira to Done.”
 
-**Quality apply:** “I confirm only the shown Quality apply.”
+**Quality apply:** “I confirm only the shown Quality apply.” That approval is the listed issue, properties (including bookkeeping keys), managed comment, the numeric transition id, local manifest, and Quality SQLite update — not “any Done transition”.
 
 Each role transition is a **separate** approval. Completing Developer does not authorize Quality review.
 

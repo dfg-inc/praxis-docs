@@ -13,3 +13,5 @@
 **Can Quality run without the Developer plugin?** Yes, if evidence/handoff files exist.
 
 **Where is the token?** Only Runtime settings.
+
+**Can I reuse last week's Quality Apply fingerprint?** No. Approve the fingerprint from the preview you just generated. After a Runtime upgrade, generate a new preview. A partial Apply is the exception: retry that same approved fingerprint until postconditions pass.

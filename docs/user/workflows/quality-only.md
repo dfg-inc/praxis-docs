@@ -19,4 +19,8 @@ Ensure does not approve QA. Review is not approval. Apply is the only Jira write
 
 If ensure fails, read the error code and [Troubleshooting](/reference/troubleshooting). Do not run `make quality-up` or `npm start` as the normal Desktop path.
 
-If apply is interrupted, call status, then retry the same fingerprint. Do not invent extra Jira actions.
+If apply is interrupted, call status, then retry the **same** fingerprint. Do not invent extra Jira actions. If Jira changed outside this Apply, generate a new preview instead of reusing the old fingerprint.
+
+After a successful Apply, verify: Jira is **Готово**, `qualityState=approved`, applied Review ID matches, local WP manifest is `approved`, Quality SQLite has the review applied, one managed comment, and no extra Bugs for a clean PASSED review.
+
+A new preview after a Runtime upgrade (for example alpha.39 → alpha.40) has a new fingerprint. Approve that preview; do not paste an old hash.

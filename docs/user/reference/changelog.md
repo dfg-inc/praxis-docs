@@ -2,6 +2,12 @@
 
 User-facing notes. Marketplace keeps its own catalog changelog as well; both should describe the same install model.
 
+## 0.1.0-alpha.40
+
+- Quality Apply binds Jira status and the approved numeric transition in the preview fingerprint
+- Fresh Apply rejects Jira drift before the first write; retries resume from the apply journal
+- `qualityState=approved` is written only after the approved transition; MCP envelope `ok` follows `data.ok`
+
 ## 0.1.0-alpha.39
 
 - Quality Review uses the bundled Quality HTTP Service, executes change-spec acceptance checks, and persists QA evidence / SQLite reviews

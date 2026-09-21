@@ -30,7 +30,10 @@ Ordinary users should not edit Praxis source to work around a defect. Distinguis
 | `QUALITY_PORT_UNAVAILABLE` | config | Another process owns 8792. Stop the other service or set a free `PRAXIS_QUALITY_PORT` only if you are debugging |
 | `QUALITY_HEALTH_TIMEOUT` / `QUALITY_DB_INIT_FAILED` | product/host | Bounded wait failed. Retry ensure; check `.praxis-quality/quality.log` |
 | `LOCAL_RUNTIME_UNAVAILABLE` | config | Cowork local access + folder |
-| Stale preview fingerprint | expected | New preview |
+| Stale preview fingerprint | expected | New preview. Do not apply an older hash after generating a new preview (including after a Runtime upgrade). |
+| `QUALITY_PREVIEW_STALE` | expected | Jira status, transition id, or transition target changed before Apply wrote anything. New preview, then new YES. |
+| `QUALITY_RECONCILIATION_REQUIRED` | data | Jira is already Done but this Apply journal cannot prove it did the transition. Inspect status; do not invent success. |
+| Quality Apply `ok=false` / `partial=true` | expected | Some actions committed, others pending. Retry the **same** fingerprint. Do not treat MCP outer `ok` as success when `data.ok` is false. |
 
 CLI remains for CI (`praxis doctor --json`). Desktop users should stay on Skills.
 

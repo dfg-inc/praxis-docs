@@ -228,7 +228,23 @@ Do not invent transition ids.
 **READ ONLY — stale fingerprint**
 
 ```
-Fingerprint mismatch. Make a new preview. Do not apply.
+Fingerprint mismatch. Make a new preview. Do not apply an older hash.
+Do not reuse a previous Runtime's Quality Apply fingerprint.
+```
+
+**READ ONLY — Quality Apply stale Jira**
+
+```
+QUALITY_PREVIEW_STALE. Show current Jira status and available transitions.
+Generate a new Quality apply preview. Do not apply the old fingerprint.
+```
+
+**READ ONLY — Quality Apply partial**
+
+```
+Quality Apply did not complete. Show completed, pending, jiraTransitioned,
+localStateReconciled, qualityStoreReconciled. Retry the same fingerprint.
+Do not create a new review.
 ```
 
 **READ ONLY — claim conflict**

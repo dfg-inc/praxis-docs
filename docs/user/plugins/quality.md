@@ -48,9 +48,13 @@ Jira approval is a separate lifecycle:
 2. Human approval
 3. `praxis_quality_apply` with `confirmation=YES` and that fingerprint
 
-A PASSED review may then set the QA report, managed comment, `qualityState=approved`, transition to **Done** (localized **Готово**), and reconcile the local WP manifest. Bugs are created only from previewed blocking findings on a FAILED review, using the numeric bug type id (never the display name «Баг»).
+A PASSED review may then set the QA report, bookkeeping properties (`praxis.qualityAppliedReviewId`, `praxis.qualityCommentId`), managed comment, the **approved numeric transition** (not a silently chosen alternative Done transition), then `qualityState=approved`, and the local WP manifest. Quality SQLite is marked applied last.
 
-Interrupted apply returns completed vs pending actions. Retry the same fingerprint; do not invent a new plan. A second apply of an already-applied review does not duplicate comments, Bugs, or transitions.
+Apply rejects a stale preview if Jira status, the approved transition id, or its target changed **before the first write**. Retry the **same** fingerprint after a partial Apply: completed journal operations are skipped; a Done status is accepted only when this Apply recorded the transition. If Jira is already Done and the journal cannot prove this Apply did it, Praxis returns `QUALITY_RECONCILIATION_REQUIRED` instead of inventing success.
+
+The MCP envelope for `praxis_quality_apply` is `ok=false` when `data.ok` is false (partial or postcondition failure). Check `data.pending`, `data.jiraTransitioned`, `data.localStateReconciled`, and `data.qualityStoreReconciled`.
+
+Do not reuse an older preview fingerprint after generating a new preview (including after upgrading Runtime). Alpha.39 fingerprints are not valid for alpha.40.
 
 If product source changes after review, the snapshot is stale: run a new review, then a new preview. Do not apply an old PASSED fingerprint.
 

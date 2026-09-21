@@ -256,10 +256,11 @@ Do not write Jira.
 ### STEP 19 — Quality apply preview and approval
 
 - **Plugin:** Quality
-- **Prompt:** “Show the Quality apply preview.” Then, after you accept: “I confirm only the shown Quality apply.”
-- **Writes:** none on preview. Apply writes QA report, managed comment, qualityState, Done (**Готово**); fail → previewed bugs, not silent Done
-- **Approval:** YES + `previewFingerprint` on `praxis_quality_apply` only
-- **Verify:** bugs use numeric type id, not the display name Bug; local `qualityState` matches Jira
+- **Prompt:** “Show the Quality apply preview.” Compare the exact Jira writes (issue, properties, managed comment, numeric transition, local manifest, Quality SQLite). Then, after you accept: “I confirm only the shown Quality apply.”
+- **Writes:** none on preview. Apply executes **that** plan: QA report, bookkeeping properties, managed comment, the **approved numeric** Done transition (**Готово**), then `qualityState=approved`; fail → previewed bugs, not silent Done
+- **Approval:** YES + the **current** `previewFingerprint` on `praxis_quality_apply` only. After a Runtime upgrade, generate a **new** preview. Do not reuse an older fingerprint.
+- **Verify:** bugs use numeric type id, not the display name Bug; local `qualityState` matches Jira; Apply MCP `ok` is false if any postcondition is pending
+- **Stop:** wait for human approval. Do not auto-apply.
 
 ### STEP 20 — Final verification
 
