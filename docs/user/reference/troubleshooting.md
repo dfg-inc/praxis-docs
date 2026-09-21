@@ -34,6 +34,8 @@ Ordinary users should not edit Praxis source to work around a defect. Distinguis
 | `QUALITY_PREVIEW_STALE` | expected | Jira status, transition id, or transition target changed before Apply wrote anything. New preview, then new YES. |
 | `QUALITY_RECONCILIATION_REQUIRED` | data | Jira is already Done but this Apply journal cannot prove it did the transition. Inspect status; do not invent success. |
 | Quality Apply `ok=false` / `partial=true` | expected | Some actions committed, others pending. Retry the **same** fingerprint. Do not treat MCP outer `ok` as success when `data.ok` is false. |
+| Developer status `qualityState=pending` after Apply | product (alpha.40) | Install alpha.41+. Status must follow `praxis.state` / local manifest, not `status=ready-for-qa`. |
+| Quality worker `stopped` / `unknown` between Desktop turns | host/product | Worker mode lives in the Runtime MCP process. Call `praxis_quality_ensure` again. Read `lastKnownPid`, `lastExitCode`, `logPath`. Do not invent a Cowork cause. |
 
 CLI remains for CI (`praxis doctor --json`). Desktop users should stay on Skills.
 

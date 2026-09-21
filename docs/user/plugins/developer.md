@@ -26,10 +26,12 @@ implementation finished
 Preferred persisted states after complete:
 
 - `claim.state`: `active`
-- `implementation.state`: `complete`
-- `quality.state`: `pending`
+- `implementationState`: `complete`
+- `qualityState`: `pending` until Quality Apply; then `approved`
 - `readyForQuality`: `true`
-- Jira: **В работе / In Progress**
+- Jira: **В работе / In Progress** until Quality Apply moves it to Done
+
+`praxis_developer_status.qualityState` follows `praxis.state` and the local WP manifest. It does **not** stay `pending` merely because `status` is still `ready-for-qa`.
 
 If verification fails, complete is refused (no readyForQuality, no Done).
 

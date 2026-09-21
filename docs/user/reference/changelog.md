@@ -2,6 +2,12 @@
 
 User-facing notes. Marketplace keeps its own catalog changelog as well; both should describe the same install model.
 
+## 0.1.0-alpha.41
+
+- Developer status reads canonical `qualityState` from `praxis.state` and the local WP manifest, not `status=ready-for-qa`
+- `praxis.workPackageManifest` is a membership/claim snapshot and does not override Quality approval
+- Read-only `praxis_quality_apply_status` and `praxis_quality_review_show`; Quality worker exit is recorded by the Runtime supervisor
+
 ## 0.1.0-alpha.40
 
 - Quality Apply binds Jira status and the approved numeric transition in the preview fingerprint

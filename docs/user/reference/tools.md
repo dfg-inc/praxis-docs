@@ -12,6 +12,6 @@ Names must match the MCP catalog. Do not invent aliases.
 
 **Developer:** `praxis_developer_status`, `praxis_developer_claim`, `praxis_developer_release`, `praxis_developer_complete`, `praxis_developer_complete_recovery_preview`, `praxis_developer_complete_recovery_apply`
 
-**Quality:** `praxis_quality_status`, `praxis_quality_ensure`, `praxis_quality_review`, `praxis_quality_report`, `praxis_quality_apply_preview`, `praxis_quality_apply`
+**Quality:** `praxis_quality_status`, `praxis_quality_ensure`, `praxis_quality_review`, `praxis_quality_report`, `praxis_quality_review_show`, `praxis_quality_apply_preview`, `praxis_quality_apply_status`, `praxis_quality_apply`
 
 Apply tools require `confirmation=YES`. BA/Architect apply and Quality apply also require `previewFingerprint`. Quality Review does **not** require confirmation and does **not** write Jira.

@@ -16,16 +16,38 @@ On machines where Praxis runs under a normal `node` binary (CLI, CI), Quality is
 
 | Tool | What it does |
 |------|----------------|
-| `praxis_quality_status` | Read-only. Runtime health plus latest review when `workPackage` is given. Does **not** start the service. |
+| `praxis_quality_status` | Read-only. Runtime health plus Quality lifecycle when `workPackage` is given. Does **not** start the service. |
 | `praxis_quality_ensure` | Starts the service if needed, waits for `/health`, reuses a healthy instance. Does **not** run review, create bugs, or mark Done. |
 | `praxis_quality_review` | Executes Quality Review through the Quality HTTP Service. Runs change-spec acceptance checks and the project's tests, persists QA evidence and Quality SQLite. Does **not** write Jira. No confirmation. |
 | `praxis_quality_report` | Safe alias of `praxis_quality_review`. Not a Jira write. |
+| `praxis_quality_review_show` | Read-only GET of a Quality Review by id from Quality storage. Does **not** start Quality and does **not** write Jira. |
 | `praxis_quality_apply_preview` | Read-only proposed Jira writes for the persisted review. Returns `previewFingerprint`. |
+| `praxis_quality_apply_status` | Read-only postconditions: Jira properties, managed comment, local manifest, apply journal, consistency. No writes. |
 | `praxis_quality_apply` | Writes the approved plan. Requires `confirmation=YES` and the current fingerprint. |
 
 **When it starts:** only when you (or the Quality Skill) call `praxis_quality_ensure`. Praxis Runtime startup does **not** start Quality. BA, Architect, and Developer do not need it.
 
-**Healthy** means the service answered `/health` for **this** repository. **Unavailable / not_started** means it is not running yet — call ensure. That is not a reason to stop BA/Architect/Developer.
+**Healthy** means the service answered `/health` for **this** repository. **not_started** means it has not been ensured yet. **stopped** means a previously known worker/process is gone (`lastKnownPid` is not running). **unknown** means `/health` failed and the supervisor did not record an exit. Call ensure to recover. That is not a reason to stop BA/Architect/Developer.
+
+## Canonical qualityState
+
+Public status tools (`praxis_developer_status`, `praxis_quality_status`, `praxis_quality_apply_status`) share one Quality lifecycle:
+
+| Field | Meaning | Canonical source |
+|------|---------|------------------|
+| `implementationState` | Developer complete | local manifest / `praxis.state` |
+| `readyForQuality` | Handoff exists | local manifest / `praxis.state` |
+| `claim.state` | Developer ownership | `praxis.claim` |
+| `qualityState` | QA approval | `praxis.state.qualityState`, then local `manifest.qualityState` |
+| `appliedReviewId` | Which review was applied | `praxis.qualityAppliedReviewId` / `praxis.state.reviewId` |
+
+`status=ready-for-qa` is **not** `qualityState`. After Quality Apply, `qualityState=approved` even if the local WP `status` remains `ready-for-qa`.
+
+`praxis.workPackageManifest` is a Jira snapshot of WP membership, claim, and the last Architect/Developer write. It is **not** the source of current `qualityState`. Status tools ignore it for Quality approval and do not rewrite Developer claim.
+
+Read-only status never reconciles Jira. If sources diverge, tools report `qualityConsistency=divergent` with `source` / `actualValue` / `expectedValue` / `diagnosticCode`. That is not an Apply.
+
+On Desktop, Quality in **worker** mode lives inside the Praxis Runtime MCP process. If Claude Desktop starts a new Runtime process, the previous worker exits with it. `praxis_quality_status` then shows `stopped` or `unknown` with `lastKnownPid` and `logPath`. Call `praxis_quality_ensure` again (idempotent; same repo database). This live Desktop lifetime is still **pending validation** after install; Docker/MCPB tests are not a LIVE Desktop pass.
 
 On failure, Praxis returns a structured code (`QUALITY_PACKAGE_MISSING`, `QUALITY_STARTUP_FAILED`, `QUALITY_SPAWN_FAILED`, `QUALITY_EXECUTABLE_NOT_FOUND`, `QUALITY_PROCESS_EXITED`, `QUALITY_PORT_UNAVAILABLE`, `QUALITY_DB_INIT_FAILED`, `QUALITY_HEALTH_TIMEOUT`, `QUALITY_SQLITE_UNAVAILABLE`, `QUALITY_SQLITE_MODULE_LOAD_FAILED`, `QUALITY_CHILD_RUNTIME_MISMATCH`, `QUALITY_NODE_UNSUPPORTED`) with `stage`, `nodeVersion`, `nodeExecutable`, `parentNodeExecutable`, `spawnErrorCode`, `exitCode`, `durationMs`, and `logPath` when available. A missing pid is **not** treated as a complete diagnosis. Do not edit Praxis source to work around a startup defect.
 
