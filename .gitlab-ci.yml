@@ -1,0 +1,47 @@
+# praxis-docs — GitLab CI (VitePress static site; no production deploy)
+stages:
+  - verify
+  - package
+
+default:
+  image: node:22-bookworm
+  interruptible: true
+  cache:
+    key:
+      files: [package-lock.json]
+    paths: [.npm/]
+  before_script:
+    - node -v && npm -v
+    - npm ci --cache .npm --prefer-offline
+
+variables:
+  npm_config_cache: "$CI_PROJECT_DIR/.npm"
+
+build_docs:
+  stage: verify
+  script:
+    - npm run docs:build
+    - npm run accept:docs
+    - test -f apps/docs-site/.vitepress/dist/index.html
+
+site_artifact:
+  stage: package
+  needs: [build_docs]
+  script:
+    - mkdir -p public
+    - cp -R apps/docs-site/.vitepress/dist/. public/
+    - |
+      python3 - <<'PY'
+      import hashlib, json, pathlib
+      files = sorted(p for p in pathlib.Path("public").rglob("*") if p.is_file())
+      assert files, "empty docs site"
+      sample = [{"file": str(p), "sha256": hashlib.sha256(p.read_bytes()).hexdigest(), "bytes": p.stat().st_size} for p in files[:40]]
+      pathlib.Path("dist-docs-checksums.json").write_text(json.dumps({"fileCount": len(files), "sample": sample}, indent=2) + "\n")
+      print("files", len(files))
+      PY
+  artifacts:
+    paths:
+      - public/
+      - dist-docs-checksums.json
+    expire_in: 30 days
+    name: "praxis-docs-site-$CI_COMMIT_SHORT_SHA"

@@ -19,11 +19,13 @@ const enSidebar = {
     { text: "Uninstall", link: "/getting-started/uninstall" },
   ],
   "/concepts/": [
+    { text: "Core", link: "/concepts/core" },
     { text: "Runtime", link: "/concepts/runtime" },
     { text: "Plugins and Skills", link: "/concepts/plugins" },
     { text: "Work Packages", link: "/concepts/work-packages" },
     { text: "Jira workflow", link: "/concepts/jira-workflow" },
     { text: "Human approval", link: "/concepts/approvals" },
+    { text: "Marketplace", link: "/concepts/marketplace" },
   ],
   "/plugins/": [
     { text: "Compare roles", link: "/plugins/overview" },

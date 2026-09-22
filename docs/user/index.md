@@ -17,6 +17,19 @@ You do **not** need Make, npm, a terminal, `launchctl`, or a `.env` file for ord
 7. [Full tutorial](/workflows/full-e2e)
 8. [GitHub Delivery](/workflows/github-delivery)
 
+## Product map
+
+| Product | Repository | What it is |
+|---------|------------|------------|
+| Core | `praxis-core` | Shared libraries ([Core](/concepts/core)) |
+| Runtime | `praxis-runtime` | Desktop MCPB + Quality HTTP worker ([Runtime](/concepts/runtime)) |
+| BA | `praxis-ba` | Requirements Skills ZIP |
+| Architect | `praxis-architect` | Design Skills ZIP |
+| Developer | `praxis-developer` | Implementation Skills ZIP |
+| Quality | `praxis-quality` | QA Skills ZIP |
+| Docs | `praxis-docs` | This VitePress portal |
+| Marketplace | `praxis-marketplace` | Catalog site ([Marketplace](/concepts/marketplace)) |
+
 ## The four roles
 
 | Plugin | What it does | Install with |
