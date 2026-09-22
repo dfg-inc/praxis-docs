@@ -1,7 +1,9 @@
-# praxis-docs — GitLab CI (VitePress static site; no production deploy)
+# praxis-docs — GitLab CI + Pages deploy
+# Permanent URL (unique domain): https://praxis-docs-e263c2.pages.jetru.by
+# VitePress base must stay "/" while unique domain is enabled.
 stages:
   - verify
-  - package
+  - deploy
 
 default:
   image: node:22-bookworm
@@ -16,6 +18,8 @@ default:
 
 variables:
   npm_config_cache: "$CI_PROJECT_DIR/.npm"
+  # Documented for operators; unique-domain Pages serve at site root.
+  PRAXIS_DOCS_PAGES_URL: "https://praxis-docs-e263c2.pages.jetru.by"
 
 build_docs:
   stage: verify
@@ -28,8 +32,8 @@ build_docs:
       - apps/docs-site/.vitepress/dist/
     expire_in: 1 hour
 
-site_artifact:
-  stage: package
+pages:
+  stage: deploy
   needs:
     - job: build_docs
       artifacts: true
@@ -45,10 +49,14 @@ site_artifact:
       sample = [{"file": str(p), "sha256": hashlib.sha256(p.read_bytes()).hexdigest(), "bytes": p.stat().st_size} for p in files[:40]]
       pathlib.Path("dist-docs-checksums.json").write_text(json.dumps({"fileCount": len(files), "sample": sample}, indent=2) + "\n")
       print("files", len(files))
+      print("pages_url", "https://praxis-docs-e263c2.pages.jetru.by")
       PY
   artifacts:
     paths:
-      - public/
+      - public
       - dist-docs-checksums.json
-    expire_in: 30 days
-    name: "praxis-docs-site-$CI_COMMIT_SHORT_SHA"
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+  environment:
+    name: pages
+    url: https://praxis-docs-e263c2.pages.jetru.by

@@ -54,3 +54,9 @@ If you install a role ZIP without the Runtime, tools such as `praxis_doctor` are
 These pages are the **canonical user documentation**. The Praxis Marketplace site includes the same Markdown files at build time so installation instructions cannot drift between the two surfaces.
 
 Marketplace catalog and method pages remain on the Marketplace site. This portal is the end-user installation and workflow guide.
+
+**Live sites (GitLab Pages, private):**
+
+- Docs (this portal): https://praxis-docs-e263c2.pages.jetru.by
+- Marketplace: https://praxis-marketplace-833761.pages.jetru.by
+

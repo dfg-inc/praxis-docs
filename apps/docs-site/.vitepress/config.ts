@@ -58,12 +58,17 @@ const enSidebar = {
 };
 
 export default defineConfig({
+  // Unique-domain GitLab Pages: https://praxis-docs-e263c2.pages.jetru.by
+  base: "/",
   title: "Praxis Docs",
   description: "Install and use Praxis with Claude Desktop and Cowork",
   srcDir: "../../docs/user",
   lastUpdated: true,
   themeConfig: {
-    nav: enNav,
+    nav: [
+      ...enNav,
+      { text: "Marketplace", link: "https://praxis-marketplace-833761.pages.jetru.by/" },
+    ],
     sidebar: {
       ...enSidebar,
       "/": [

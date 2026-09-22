@@ -6,7 +6,7 @@ Labels below match the Claude Desktop paths documented for current Praxis Deskto
 
 ## 1. Obtain release artifacts
 
-Download each file from that product’s **GitLab Releases** page (not from CI job artifacts).
+Download each file from that product’s **GitLab Releases** page (not from CI job artifacts). Current wave: [v0.1.0-alpha.44 Runtime](https://gl.jetru.by/engineering/ai-tooling/praxis-runtime/-/releases/v0.1.0-alpha.44) (and matching tags on each role repo).
 
 Repositories are private: sign into GitLab on `gl.jetru.by`, open the repo → **Deploy → Releases** (or **Code → Releases**), pick the version, download the asset.
 
