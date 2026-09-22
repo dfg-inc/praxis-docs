@@ -23,11 +23,18 @@ build_docs:
     - npm run docs:build
     - npm run accept:docs
     - test -f apps/docs-site/.vitepress/dist/index.html
+  artifacts:
+    paths:
+      - apps/docs-site/.vitepress/dist/
+    expire_in: 1 hour
 
 site_artifact:
   stage: package
-  needs: [build_docs]
+  needs:
+    - job: build_docs
+      artifacts: true
   script:
+    - test -f apps/docs-site/.vitepress/dist/index.html
     - mkdir -p public
     - cp -R apps/docs-site/.vitepress/dist/. public/
     - |
