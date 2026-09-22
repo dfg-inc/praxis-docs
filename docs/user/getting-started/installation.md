@@ -6,17 +6,21 @@ Labels below match the Claude Desktop paths documented for current Praxis Deskto
 
 ## 1. Obtain release artifacts
 
-Take them from the Praxis release you were given (git tag such as `v0.1.0-alpha.35`, an internal mirror, or Marketplace downloads that point at **real** files).
+Download each file from that product’s **GitLab Releases** page (not from CI job artifacts).
 
-Required files:
+Repositories are private: sign into GitLab on `gl.jetru.by`, open the repo → **Deploy → Releases** (or **Code → Releases**), pick the version, download the asset.
 
-```
-claude-extensions/praxis-runtime.mcpb
-claude-plugins/praxis-ba.zip
-claude-plugins/praxis-architect.zip
-claude-plugins/praxis-developer.zip
-claude-plugins/praxis-quality.zip
-```
+| Product | Repository | Release asset |
+|---------|------------|---------------|
+| Runtime | [praxis-runtime](https://gl.jetru.by/engineering/ai-tooling/praxis-runtime/-/releases) | `praxis-runtime.mcpb` |
+| BA | [praxis-ba](https://gl.jetru.by/engineering/ai-tooling/praxis-ba/-/releases) | `praxis-ba.zip` |
+| Architect | [praxis-architect](https://gl.jetru.by/engineering/ai-tooling/praxis-architect/-/releases) | `praxis-architect.zip` |
+| Developer | [praxis-developer](https://gl.jetru.by/engineering/ai-tooling/praxis-developer/-/releases) | `praxis-developer.zip` |
+| Quality | [praxis-quality](https://gl.jetru.by/engineering/ai-tooling/praxis-quality/-/releases) | `praxis-quality.zip` |
+
+Each release also publishes `release-meta.json` (version, source SHA, SHA-256, compatibility). Assets live in the project **Generic Package Registry** so download links outlive CI job artifact retention.
+
+Install only the role ZIPs you need. Products version independently — a BA release does not require tagging Runtime or other Skills.
 
 | File | What it is |
 |------|------------|
@@ -28,7 +32,6 @@ claude-plugins/praxis-quality.zip
 
 Runtime and role plugins are different on purpose. The MCPB talks to Jira and the disk. Role ZIPs tell Claude *how* to use those tools for one job. Role ZIPs do **not** embed another Runtime.
 
-Install only the role ZIPs you need. Installing BA does not require Architect, Developer, or Quality to be present.
 
 ## 2. Install Praxis Runtime
 
@@ -108,4 +111,4 @@ If a Skill says `PRAXIS_RUNTIME_UNAVAILABLE`, the Runtime is missing or disabled
 
 ## 7. Developer rebuild (not for end users)
 
-Rebuilders and CI use `make claude-extension` / `make claude-plugins` from the Praxis monorepo. Ordinary users must not be sent there.
+Rebuilders and CI pack from each product repository (`npm run pack:mcpb` / `npm run pack:zip`). Ordinary users must download from that product’s GitLab **Releases**, not from monorepo Make targets or CI job artifact browsers.
