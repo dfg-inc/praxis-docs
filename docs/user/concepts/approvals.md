@@ -1,6 +1,12 @@
-# Human approval
+# Approval
 
-Praxis asks because Jira writes are easy to duplicate and hard to undo.
+Praxis asks because Jira and Git writes are easy to duplicate and hard to undo. The flow is always:
+
+```
+Action -> Preview -> you Approve or Reject -> Execute -> Result
+```
+
+Nothing needs installing for this: no service, no system account, no administrator rights.
 
 ## Read vs preview vs write
 
@@ -10,11 +16,25 @@ Praxis asks because Jira writes are easy to duplicate and hard to undo.
 | PREVIEW | `praxis_ba_preview`, `praxis_architect_preview`, recovery preview | none — must not write |
 | APPLY | `praxis_ba_apply`, `praxis_architect_apply`, `praxis_developer_claim`, `praxis_developer_complete`, `praxis_quality_apply` | `confirmation=YES` and, where required, `previewFingerprint` |
 
-Saying “yes, do it” in chat does **not** satisfy the Runtime contract. The Skill must call the apply tool with `confirmation=YES` and the fingerprint from **that** preview.
+The Skill calls the apply tool with `confirmation=YES` and the fingerprint from **that** preview. That is the agent saying it wants to apply what you were shown; it is not your decision.
+
+## How you are asked
+
+Praxis then asks **you** in the MCP client's own approval dialog, which shows the same preview:
+
+- **Approve** runs exactly the previewed action.
+- **Reject** (or closing the dialog) runs nothing; the tool answers `APPROVAL_REJECTED`.
+- Your answer reaches Praxis as the client's reply, not as something the agent types, so the agent cannot answer for you.
+
+The result says how the approval was obtained. If your client cannot show the dialog, `praxis_doctor` says so (`approval.mode: unverified-fallback`): the agent must ask you in chat and apply only after you say yes, and Praxis records that approval as **unverified** and warns about it. Set *Require approval in the client dialog* in the extension settings (`PRAXIS_APPROVAL_STRICT=1`) to refuse anything that was not approved in the dialog. Every decision is also logged in `.praxis/approvals/decisions.jsonl`.
+
+Confirming a Story, confirming an architecture decision and marking a service approved are also yours: the agent cannot do them without your approval.
+
+See `docs/user-approval.md` in praxis-core for what this is and is not.
 
 ## What YES means
 
-You accept **exactly** the previewed Jira creates/updates/transitions. Reject by not calling apply. If Jira changed **before** this Apply, generate a new preview. If Apply was partial, retry the **same** fingerprint — do not generate a new preview just to “try again”.
+You accept **exactly** the previewed Jira creates/updates/transitions. Reject in the dialog (or tell the agent no, and it applies with `confirmation=NO`, which records the rejection and runs nothing). If Jira changed **before** this Apply, generate a new preview. If Apply was partial, retry the **same** fingerprint — do not generate a new preview just to “try again”.
 
 ## Examples
 
