@@ -26,7 +26,9 @@ Praxis then asks **you** in the MCP client's own approval dialog, which shows th
 - **Reject** (or closing the dialog) runs nothing; the tool answers `APPROVAL_REJECTED`.
 - Your answer reaches Praxis as the client's reply, not as something the agent types, so the agent cannot answer for you.
 
-The result says how the approval was obtained. If your client cannot show the dialog, `praxis_doctor` says so (`approval.mode: unverified-fallback`): the agent must ask you in chat and apply only after you say yes, and Praxis records that approval as **unverified** and warns about it. Set *Require approval in the client dialog* in the extension settings (`PRAXIS_APPROVAL_STRICT=1`) to refuse anything that was not approved in the dialog. Every decision is also logged in `.praxis/approvals/decisions.jsonl`.
+The result says how the approval was obtained (always in the dialog).
+
+If your client cannot show the dialog, `praxis_doctor` says so (`approval.mode: no-dialog`) and protected actions are **not executed**: Praxis returns the preview and a clear message instead. Typing "yes" in chat is not accepted as approval, because Praxis cannot tell it from the agent's own words. Read-only tools and previews keep working. Every decision is journaled outside your repository, in `~/.praxis/decisions/`.
 
 Confirming a Story, confirming an architecture decision and marking a service approved are also yours: the agent cannot do them without your approval.
 
