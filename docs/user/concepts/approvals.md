@@ -1,55 +1,42 @@
-# Approval
+# Approval Required and Trusted Client
 
-Praxis asks because Jira and Git writes are easy to duplicate and hard to undo. The flow is always:
+Praxis changes things only through one flow: **Action → Preview → Approval → Execute → Result**. Reading, previews and diagnostics never need approval. Protected actions do: creating the `.project` file, confirming a Story or decision, approving a service, Git commits and pushes, pull requests, Jira writes, Quality fixes.
 
-```
-Action -> Preview -> you Approve or Reject -> Execute -> Result
-```
+Two modes are supported. The default is **Approval Required**.
 
-Nothing needs installing for this: no service, no system account, no administrator rights.
+## Approval Required (default)
 
-## Read vs preview vs write
+The MCP client shows a dialog with the exact action (the file to be written, the commit, the plan). **Approve** runs exactly that action. **Reject**, **Cancel** or closing the dialog runs nothing. The agent cannot answer the dialog and cannot supply an approval in tool arguments.
 
-| Kind | Examples | Confirmation |
-|------|----------|----------------|
-| READ | `praxis_doctor`, `praxis_*_status`, `praxis_jira_epic` | none |
-| PREVIEW | `praxis_ba_preview`, `praxis_architect_preview`, recovery preview | none — must not write |
-| APPLY | `praxis_ba_apply`, `praxis_architect_apply`, `praxis_developer_claim`, `praxis_developer_complete`, `praxis_quality_apply` | `confirmation=YES` and, where required, `previewFingerprint` |
+If your client cannot show the dialog, the protected action is **not executed**. The tool returns `APPROVAL_CLIENT_UI_REQUIRED` at once, together with the preview, and says "NOT executed". `confirmation=YES`, text such as "I approve", or any argument does not change that. A declared dialog that nobody answers ends with `APPROVAL_TIMED_OUT` (nothing runs; ask again).
 
-The Skill calls the apply tool with `confirmation=YES` and the fingerprint from **that** preview. That is the agent saying it wants to apply what you were shown; it is not your decision.
+`praxis_doctor` → `approval.mode` tells you which case you are in (`client-ui` or `no-dialog`) and `approval.client` shows what your client declared.
 
-## How you are asked
+## Trusted Client (explicit opt-in)
 
-Praxis then asks **you** in the MCP client's own approval dialog, which shows the same preview:
+You tell Praxis to trust your client with protected actions without asking about each one. This is meant for owners who already run a client such as Claude Desktop with **Always allow** and accept that choice.
 
-- **Approve** runs exactly the previewed action.
-- **Reject** (or closing the dialog) runs nothing; the tool answers `APPROVAL_REJECTED`.
-- Your answer reaches Praxis as the client's reply, not as something the agent types, so the agent cannot answer for you.
+Turn it on yourself:
 
-The result says how the approval was obtained (always in the dialog).
+- **Claude Desktop (MCPB):** Settings → Extensions → Praxis Runtime → **Approval mode** → `trusted-client`.
+- **Claude Code / Cowork:** start the client with `PRAXIS_APPROVAL_MODE=trusted-client` in its environment. It cannot be set from a repository `.env` file, so a project can never turn it on for you. (Not verified with a live Claude Code session; the packed Runtime is verified with this variable set.)
 
-If your client cannot show the dialog, `praxis_doctor` says so (`approval.mode: no-dialog`) and protected actions are **not executed**: Praxis returns the preview and a clear message instead. Typing "yes" in chat is not accepted as approval, because Praxis cannot tell it from the agent's own words. Read-only tools and previews keep working. Every decision is journaled outside your repository, in `~/.praxis/decisions/`.
+What happens: when the agent applies a previewed action with `confirmation=YES` and the matching `previewFingerprint`, Praxis runs it. The result and the journal say **`trusted-client`**.
 
-Confirming a Story, confirming an architecture decision and marking a service approved are also yours: the agent cannot do them without your approval.
+What stays in force: the preview, the check that the plan is still current (a stale preview is refused), argument validation, `confirmation=NO` as a recorded refusal, and the decision journal.
 
-See `docs/user-approval.md` in praxis-core for what this is and is not.
+Be honest about what it is: **Always allow is a standing permission, not proof that you confirmed each action.** Praxis never reports a trusted-client run as your confirmation.
 
-## What YES means
+**Trusted Client does not cover acts only you can perform:** confirming a Story or an architecture decision, and approving a service. Those return `APPROVAL_CLIENT_UI_REQUIRED` even in this mode; do them in a client that shows an approval dialog (for example Claude Code) or in the `praxis` CLI. A standing permission is not you doing them.
 
-You accept **exactly** the previewed Jira creates/updates/transitions. Reject in the dialog (or tell the agent no, and it applies with `confirmation=NO`, which records the rejection and runs nothing). If Jira changed **before** this Apply, generate a new preview. If Apply was partial, retry the **same** fingerprint — do not generate a new preview just to “try again”.
+## host-permission (advanced)
 
-## Examples
+For a host that has no dialog but shows its own tool-permission prompt with the arguments, the apply tool can carry the exact plan text (`planText` from `praxis_approval_plan`). It is weaker than the dialog because Praxis cannot see whether the prompt was shown. Leave it off unless you know you need it.
 
-**BA apply:** “I confirm BA apply only for the shown preview and the matching fingerprint.”
+## What was observed in Claude Desktop Chat
 
-**Architect apply:** “I confirm Architect apply only for the shown WP and fingerprint.”
+A real Desktop Chat test (Desktop 3.1623.1) declared no approval dialog (`approval.mode: no-dialog`). Desktop held a protected call at its own tool-permission prompt before the call reached Praxis, which looked like a long hang. With the current build, a call that reaches Praxis is answered immediately. Check `~/.praxis/diagnostics/mcp.jsonl`: no `tool_enter` for a call means Desktop never passed it on.
 
-**Developer claim:** “I confirm claim only for WP-20260914-002 and the shown START_DEVELOPMENT.”
+## Where decisions are recorded
 
-**Developer complete:** “I confirm complete and the Quality handoff. Do not start Quality and do not move Jira to Done.”
-
-**Quality apply:** “I confirm only the shown Quality apply.” That approval is the listed issue, properties (including bookkeeping keys), managed comment, the numeric transition id, local manifest, and Quality SQLite update — not “any Done transition”.
-
-Each role transition is a **separate** approval. Completing Developer does not authorize Quality review.
-
-How to inspect proposed writes: read the preview JSON (issue types, summaries, transition names/ids). How to avoid duplicates: trust idempotent apply; do not re-run apply with a different fingerprint “just in case”.
+`~/.praxis/decisions/<repository hash>.jsonl`, outside the repository (set `PRAXIS_STATE_HOME` to move it). Each entry has the action, the channel (`client-elicitation`, `trusted-client`, ...), the outcome and the time.

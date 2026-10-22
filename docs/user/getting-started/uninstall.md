@@ -1,9 +1,8 @@
 # Uninstall
 
-1. Disable or remove **Praxis Runtime** under **Settings → Extensions**.
-2. Disable or remove each Praxis role plugin under **Plugins**.
-3. Restart Claude Desktop.
+- **Marketplace install:** remove **Praxis** under **Customize → Plugins**. Dependencies installed with it (the Runtime and the roles) can be removed there too; from a terminal, `claude plugin uninstall praxis@praxis` and then `claude plugin prune` removes dependencies nothing else needs.
+- **Desktop Chat (MCPB):** disable or remove **Praxis Runtime** under **Settings → Extensions**, then restart Claude Desktop.
 
-Jira issues, local `design/` artifacts, and `.project` in the product repo are **not** deleted. Remove those only if you intend to discard project data.
+Your project data is **not** deleted: `.project`, `.praxis/`, Jira issues and local artifacts stay. The decision journal and diagnostics live under `~/.praxis/` (`decisions/`, `diagnostics/`); delete that folder only if you want to discard them.
 
-Uninstalling one role ZIP does not uninstall the Runtime or other roles.
+Removing one role does not remove the Runtime or the other roles.

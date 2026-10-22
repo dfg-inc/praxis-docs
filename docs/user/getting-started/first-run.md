@@ -1,10 +1,10 @@
 # First run
 
-After Runtime + at least one role plugin:
+After installing **Praxis** (or the Runtime plus at least one role) from the marketplace:
 
-## 1. Start Cowork
+## 1. Open your client
 
-1. Open **Cowork** in Claude Desktop.
+1. Open Claude Code, Desktop **Code** or **Cowork** (in Desktop **Chat** use the MCPB Runtime).
 2. Turn **Only on this computer** / local computer access **ON** (wording varies by build). Developer and Quality cannot implement or re-test without local execution.
 3. **New session** (do this after installing or updating extensions).
 4. Choose the **product repository folder**.
@@ -15,7 +15,7 @@ After Runtime + at least one role plugin:
 
 ## 2. Infer `.project` if missing
 
-If the folder has no `.project`, the Skill runs `praxis_project_init_preview`, shows inferred YAML, and waits. Approve with `praxis_project_init_apply` and `confirmation=YES` only after you read it.
+If the folder has no `.project`, the Skill runs `praxis_project_init_preview`, shows inferred YAML, and waits. Applying it is a protected action: you approve it in your client's approval dialog, and nothing is written if you reject it or if your client has no dialog (`APPROVAL_CLIENT_UI_REQUIRED`). If you chose Trusted Client, the agent applies it with `confirmation=YES` and the result says `trusted-client`. See [Approvals](/concepts/approvals).
 
 Do not hand-write `.project` unless you are an advanced user. Secrets do not belong there. See [Configuration](/reference/configuration).
 
@@ -48,4 +48,4 @@ Study the requirements and existing Stories first.
 Do not create anything in Jira automatically.
 ```
 
-Then follow [human approval](/concepts/approvals). Natural language “yes” does **not** bypass `confirmation=YES` and preview fingerprints.
+Then follow [human approval](/concepts/approvals). Natural language “yes” is not an approval: protected actions need your client's dialog or your explicit Trusted Client setting, and a current preview fingerprint.
