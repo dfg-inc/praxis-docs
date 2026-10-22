@@ -18,7 +18,7 @@ Praxis **Core** (`praxis-core`) is the shared library repository. It does **not*
 
 ## How other products consume Core
 
-Downstream products (`praxis-runtime`, role plugins, Marketplace) pin Core packages as **tracked `vendor/*.tgz` files** with exact versions. They do **not** import `/Users/serg/work/praxis` or any monorepo path.
+Downstream products (`praxis-runtime`, role plugins, Marketplace) pin Core packages as **tracked `vendor/*.tgz` files** with exact versions. They do **not** import a local monorepo checkout or any monorepo path.
 
 See each product README → *Core dependencies* and the Core repository `DEPENDENCIES.md`.
 

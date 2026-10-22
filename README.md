@@ -2,9 +2,7 @@
 
 Canonical VitePress user portal for Core, Runtime, BA, Architect, Developer, Quality, and Marketplace.
 
-**Production URL (GitLab Pages, unique domain):** https://praxis-docs-e263c2.pages.jetru.by
-
-Access: project is **private**; sign into `gl.jetru.by` (same SSO session) before opening Pages. VitePress `base` is `/` because unique domain is enabled.
+Repository: https://github.com/dfg-inc/praxis-docs. Praxis installs from the Claude plugin marketplace `dfg-inc/praxis-marketplace` (https://github.com/dfg-inc/praxis-marketplace): Claude → Customize → Plugins → Add marketplace → Praxis → Add.
 
 ```bash
 npm ci
@@ -19,6 +17,4 @@ npm run verify   # docs:build + accept:docs
 
 ## Deploy
 
-Push to `master` runs `build_docs` then the GitLab `pages` job, which publishes `public/` to the unique-domain URL above. Marketplace: https://praxis-marketplace-833761.pages.jetru.by
-
-Marketplace builds clone this repo's `docs/user` via `CI_JOB_TOKEN`.
+The site is built with VitePress (`npm run docs:build`). The maintainers' internal CI also publishes it to an internal Pages site; the marketplace repository syncs this repo's `docs/user` into its own site.

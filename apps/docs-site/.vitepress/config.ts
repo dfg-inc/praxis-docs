@@ -89,7 +89,7 @@ const enSidebar = {
 };
 
 export default defineConfig({
-  // Unique-domain GitLab Pages: https://praxis-docs-e263c2.pages.jetru.by
+  // Served from the site root.
   base: "/",
   title: "Praxis Docs",
   description: "Install and use Praxis from the Claude plugin marketplace",
@@ -98,7 +98,7 @@ export default defineConfig({
   themeConfig: {
     nav: [
       ...enNav,
-      { text: "Marketplace", link: "https://praxis-marketplace-833761.pages.jetru.by/" },
+      { text: "Marketplace", link: "https://github.com/dfg-inc/praxis-marketplace" },
     ],
     sidebar: {
       ...enSidebar,
