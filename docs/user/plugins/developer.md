@@ -78,7 +78,7 @@ Premature Done recovery is a **separate** preview/apply (`praxis_developer_compl
 
 After Quality Apply, deliver approved product files through Claude — not by typing Git in a terminal.
 
-**GitHub is the MVP provider** (HTTPS or SSH transport + GitHub API token for Pull Requests). GitLab.com / Self-Managed remain available for remotes and Merge Requests. Praxis does **not** guess `github.com`, `gl.jetru.by`, or any other host from Jira.
+**GitHub is the MVP provider** (HTTPS or SSH transport + GitHub API token for Pull Requests). GitLab.com / Self-Managed remain available for remotes and Merge Requests. Praxis does **not** guess `github.com`, a default host, or any other host from Jira.
 
 Canonical walkthrough (copy-paste): [GitHub Delivery](/workflows/github-delivery).
 
