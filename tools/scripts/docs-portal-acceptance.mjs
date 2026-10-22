@@ -61,6 +61,27 @@ const requiredPages = [
   "reference/troubleshooting.md",
   "reference/faq.md",
   "reference/changelog.md",
+  "guide/create-project.md",
+  "guide/without-jira.md",
+  "guide/ba.md",
+  "guide/architect.md",
+  "guide/developer.md",
+  "guide/quality.md",
+  "guide/handoffs.md",
+  "guide/multi-repo.md",
+  "guide/git-delivery.md",
+  "guide/jira-simpleone.md",
+  "guide/approval-modes.md",
+  "technical/architecture.md",
+  "technical/compatibility.md",
+  "technical/tools-catalog.md",
+  "technical/plugin-manifests.md",
+  "technical/marketplace-distribution.md",
+  "technical/configuration.md",
+  "technical/security-model.md",
+  "technical/diagnostics.md",
+  "technical/troubleshooting.md",
+  "technical/release-process.md",
 ];
 
 for (const rel of requiredPages) {
@@ -69,16 +90,32 @@ for (const rel of requiredPages) {
 
 const install = readFileSync(join(canonical, "getting-started/installation.md"), "utf8");
 for (const needle of [
+  "Customize → Plugins",
+  "Add marketplace",
+  "https://github.com/dfg-inc/praxis-marketplace",
+  "dfg-inc/praxis-marketplace",
   "praxis-runtime.mcpb",
-  "praxis-ba.zip",
-  "praxis-architect.zip",
-  "praxis-developer.zip",
-  "praxis-quality.zip",
-  "PRAXIS_RUNTIME_UNAVAILABLE",
-  "jira_token",
+  "Claude Desktop Chat",
+  "Install one role only",
+  "not yet verified",
 ]) {
   if (!install.includes(needle)) fail(`installation guide missing ${needle}`);
 }
+
+// The install flow must not point at removed components or placeholders.
+const OBSOLETE = [/native approval service/i, /\bbroker\b/i, /webauthn/i, /\.pkg\b/i, /launchd/i, /OWNER\/REPO/, /<your-org>/i];
+const obsoleteHits = [];
+for (const file of walk(canonical)) {
+  if (extname(file) !== ".md") continue;
+  const text = readFileSync(file, "utf8");
+  // Pages may say these components do NOT exist; a mention must sit next to a negation.
+  for (const line of text.split("\n")) {
+    if (OBSOLETE.some((re) => re.test(line)) && !/\b(no|not|never|without|removed|nothing|none|neither|nor|earlier|old|unreleased)\b/i.test(line)) {
+      obsoleteHits.push(`${relative(root, file)}: ${line.trim().slice(0, 90)}`);
+    }
+  }
+}
+if (obsoleteHits.length) fail(`obsolete approval/install components mentioned as current:\n${obsoleteHits.slice(0, 10).join("\n")}`);
 
 const secretHits = [];
 for (const file of walk(canonical)) {
@@ -98,9 +135,9 @@ for (let i = 1; i <= 20; i += 1) {
 if (runtimeRoot) {
   const catalogSrc = readFileSync(join(runtimeRoot, "packages/mcp/src/catalog.ts"), "utf8");
   const toolNames = [...catalogSrc.matchAll(/name: "(praxis_[a-z0-9_]+)"/g)].map((m) => m[1]);
-  const toolsPage = readFileSync(join(canonical, "reference/tools.md"), "utf8");
+  const catalogPage = readFileSync(join(canonical, "technical/tools-catalog.md"), "utf8");
   for (const name of toolNames) {
-    if (!toolsPage.includes(name)) fail(`tools.md missing catalog tool ${name}`);
+    if (!catalogPage.includes(name)) fail(`technical/tools-catalog.md missing catalog tool ${name}`);
   }
 }
 

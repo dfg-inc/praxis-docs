@@ -2,13 +2,44 @@ import { defineConfig } from "vitepress";
 
 const enNav = [
   { text: "Getting started", link: "/getting-started/overview" },
+  { text: "User guide", link: "/guide/create-project" },
   { text: "Plugins", link: "/plugins/overview" },
   { text: "Workflows", link: "/workflows/full-e2e" },
+  { text: "Technical", link: "/technical/architecture" },
   { text: "Prompts", link: "/reference/prompts" },
   { text: "Reference", link: "/reference/configuration" },
 ];
 
+const guideSidebar = [
+  { text: "Create a project", link: "/guide/create-project" },
+  { text: "Work without Jira", link: "/guide/without-jira" },
+  { text: "BA: requirements and Stories", link: "/guide/ba" },
+  { text: "Architect: decisions", link: "/guide/architect" },
+  { text: "Developer: implementation", link: "/guide/developer" },
+  { text: "Quality: checks and fixes", link: "/guide/quality" },
+  { text: "Handoffs and going back", link: "/guide/handoffs" },
+  { text: "Several repositories", link: "/guide/multi-repo" },
+  { text: "Git: commits, branches, PR/MR", link: "/guide/git-delivery" },
+  { text: "Jira and SimpleOne", link: "/guide/jira-simpleone" },
+  { text: "Approval Required and Trusted Client", link: "/guide/approval-modes" },
+];
+
+const technicalSidebar = [
+  { text: "Architecture", link: "/technical/architecture" },
+  { text: "Core/Runtime compatibility", link: "/technical/compatibility" },
+  { text: "MCP tools catalog", link: "/technical/tools-catalog" },
+  { text: "Plugin manifests and dependencies", link: "/technical/plugin-manifests" },
+  { text: "Marketplace distribution", link: "/technical/marketplace-distribution" },
+  { text: "Configuration", link: "/technical/configuration" },
+  { text: "Security model", link: "/technical/security-model" },
+  { text: "Diagnostics", link: "/technical/diagnostics" },
+  { text: "Troubleshooting", link: "/technical/troubleshooting" },
+  { text: "Release process", link: "/technical/release-process" },
+];
+
 const enSidebar = {
+  "/guide/": guideSidebar,
+  "/technical/": technicalSidebar,
   "/getting-started/": [
     { text: "Overview", link: "/getting-started/overview" },
     { text: "Requirements", link: "/getting-started/requirements" },
@@ -61,7 +92,7 @@ export default defineConfig({
   // Unique-domain GitLab Pages: https://praxis-docs-e263c2.pages.jetru.by
   base: "/",
   title: "Praxis Docs",
-  description: "Install and use Praxis with Claude Desktop and Cowork",
+  description: "Install and use Praxis from the Claude plugin marketplace",
   srcDir: "../../docs/user",
   lastUpdated: true,
   themeConfig: {
@@ -74,8 +105,10 @@ export default defineConfig({
       "/": [
         { text: "Getting started", items: enSidebar["/getting-started/"] },
         { text: "Concepts", items: enSidebar["/concepts/"] },
+        { text: "User guide", items: guideSidebar },
         { text: "Plugins", items: enSidebar["/plugins/"] },
         { text: "Workflows", items: enSidebar["/workflows/"] },
+        { text: "Technical", items: technicalSidebar },
         { text: "Reference", items: enSidebar["/reference/"] },
       ],
     },

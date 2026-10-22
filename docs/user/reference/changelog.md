@@ -2,6 +2,14 @@
 
 User-facing notes. Marketplace keeps its own catalog changelog as well; both should describe the same install model.
 
+## 0.1.0-alpha.48
+
+- Install from Claude: **Customize → Plugins → Add marketplace → `dfg-inc/praxis-marketplace` → Praxis → Add**. The `praxis` plugin installs Runtime, BA, Architect, Developer and Quality; a single role installs the Runtime with it. Desktop **Chat** still uses the separate `praxis-runtime.mcpb`
+- Approvals: Action → Preview → Approval → Execute → Result. **Approval Required** (default; client dialog, or an immediate `APPROVAL_CLIENT_UI_REQUIRED` with the preview when the client has none) and the new explicit **Trusted Client** mode (labelled `trusted-client`, never reported as your confirmation). See [Approvals](/concepts/approvals)
+- `APPROVAL_TIMED_OUT`, `approval.client` evidence and a local diagnostics log in `praxis_doctor`
+- The decision journal lives outside the repository (`~/.praxis/decisions/`)
+- Full notes: `RELEASE-NOTES-0.1.0-alpha.48.md` in the marketplace repository. Not yet verified through the Claude UI
+
 ## 0.1.0-alpha.44
 
 - Complete GitHub Delivery: local `master` publishes to GitHub `main` with an explicit refspec (`<SHA>:refs/heads/main`); empty UI-created repos are supported; remote `master` is not created

@@ -1,114 +1,68 @@
-# Install Praxis (Claude Desktop / Cowork)
+# Install Praxis
 
-This is the ordinary-user path. It does **not** use Makefile, npm, or `PRAXIS_JIRA_*` environment variables.
+Praxis installs from the Claude interface. You do not need a terminal, `npm`, `sudo`, a service or an installer package.
 
-Labels below match the Claude Desktop paths documented for current Praxis Desktop acceptance (Settings → Extensions, plugin upload). Exact wording can differ slightly by Claude Desktop version and OS. If a label is missing, use the in-app search for **Extensions** or **Plugins** rather than guessing a hidden menu.
+The marketplace is the GitHub repository **`dfg-inc/praxis-marketplace`** (`https://github.com/dfg-inc/praxis-marketplace`).
 
-## 1. Obtain release artifacts
+## Install from Claude UI (full Praxis)
 
-Download each file from that product’s **GitLab Releases** page (not from CI job artifacts). Current wave: [v0.1.0-alpha.44 Runtime](https://gl.jetru.by/engineering/ai-tooling/praxis-runtime/-/releases/v0.1.0-alpha.44) (and matching tags on each role repo).
+1. Open Claude and go to **Customize → Plugins**.
+2. Choose **Add → Add marketplace**.
+3. Enter `dfg-inc/praxis-marketplace` (or the full GitHub URL above) and confirm.
+4. Find **Praxis** in the list and press **Add**.
+5. Check that the components are there (see below).
+6. Start working: ask Claude to run the `getting-started` skill of the `praxis` plugin, or follow [First run](./first-run).
 
-Repositories are private: sign into GitLab on `gl.jetru.by`, open the repo → **Deploy → Releases** (or **Code → Releases**), pick the version, download the asset.
+Adding **Praxis** installs its dependencies automatically: **Praxis Runtime** (the local MCP server with the `praxis_*` tools), **Praxis BA**, **Praxis Architect**, **Praxis Developer** and **Praxis Quality**. Only one Runtime is started.
 
-| Product | Repository | Release asset |
-|---------|------------|---------------|
-| Runtime | [praxis-runtime](https://gl.jetru.by/engineering/ai-tooling/praxis-runtime/-/releases) | `praxis-runtime.mcpb` |
-| BA | [praxis-ba](https://gl.jetru.by/engineering/ai-tooling/praxis-ba/-/releases) | `praxis-ba.zip` |
-| Architect | [praxis-architect](https://gl.jetru.by/engineering/ai-tooling/praxis-architect/-/releases) | `praxis-architect.zip` |
-| Developer | [praxis-developer](https://gl.jetru.by/engineering/ai-tooling/praxis-developer/-/releases) | `praxis-developer.zip` |
-| Quality | [praxis-quality](https://gl.jetru.by/engineering/ai-tooling/praxis-quality/-/releases) | `praxis-quality.zip` |
+> Status of this page: the Claude Code CLI behaviour below is verified (clean install, dependency resolution, update from alpha.47). The click-by-click UI flow in Claude is **not yet verified** by the Praxis team: menu labels can differ slightly between Claude versions. If a label differs, use the in-app search for "Plugins".
 
-Each release also publishes `release-meta.json` (version, source SHA, SHA-256, compatibility). Assets live in the project **Generic Package Registry** so download links outlive CI job artifact retention.
+### Check the components
 
-Install only the role ZIPs you need. Products version independently — a BA release does not require tagging Runtime or other Skills.
+Ask Claude: *"Call praxis_doctor for this folder and show build.version, approval.mode and any errors."* You should see version `0.1.0-alpha.48`. In Claude Code you can also run `/plugin` and confirm that `praxis`, `praxis-runtime`, `praxis-ba`, `praxis-architect`, `praxis-developer` and `praxis-quality` are enabled.
 
-| File | What it is |
-|------|------------|
-| `praxis-runtime.mcpb` | **Praxis Runtime** — the shared engine. `.mcpb` is a Claude Desktop extension bundle (MCP server + `user_config`). |
-| `praxis-ba.zip` | BA **Skills only** |
-| `praxis-architect.zip` | Architect Skills only |
-| `praxis-developer.zip` | Developer Skills only |
-| `praxis-quality.zip` | Quality Skills only |
+## Which client gets what
 
-Runtime and role plugins are different on purpose. The MCPB talks to Jira and the disk. Role ZIPs tell Claude *how* to use those tools for one job. Role ZIPs do **not** embed another Runtime.
+| Client | Skills from the marketplace | Local Runtime (`praxis_*` tools) |
+|---|---|---|
+| Claude Code (CLI), Claude Desktop **Code**, **Cowork** | Yes | **Yes**, from the `praxis-runtime` plugin (a local stdio MCP server) |
+| Claude Desktop **Chat** | May be available | **No** from a plugin. Install the separate `praxis-runtime.mcpb` (below) |
+| Claude **Web** Chat | Skills only | No. Praxis has no remote service; the Runtime is local |
 
+A plugin's local MCP server does not automatically become a tool in ordinary Chat. Do not expect `praxis_*` tools in Chat unless you installed the MCPB.
 
-## 2. Install Praxis Runtime
+## Install one role only
 
-1. Open **Claude Desktop**.
-2. Open **Settings**.
-3. Open **Extensions**.
-4. Open **Advanced settings** (if shown) and choose **Install extension** (or **Install desktop extension**).
-5. Select `praxis-runtime.mcpb`.
-6. **Enable** the extension named **Praxis Runtime**.
+Pick a single role in the plugin list (for example **Praxis Quality**) and press **Add**. The role's dependency **Praxis Runtime** is installed with it; nothing else is.
 
-You should see **one** Praxis Runtime process, not one per role.
+For developers, the same from a terminal (alternative, not required):
 
-### Screenshot placeholder — Runtime install
+```bash
+claude plugin marketplace add dfg-inc/praxis-marketplace
+```
 
-> **Capture checklist (do not fabricate):** Settings window; Extensions list; Install extension file picker showing `praxis-runtime.mcpb`; extension enabled toggle; no token visible.
+```bash
+claude plugin install praxis@praxis
+```
 
-## 3. Configure the Runtime (Jira)
+```bash
+claude plugin install praxis-quality@praxis
+```
 
-1. Still in **Settings → Extensions**, open **Praxis Runtime**.
-2. Open **Settings** (extension configuration).
-3. Fill in:
+## Claude Desktop Chat: connect the Runtime with the MCPB
 
-| UI field | `user_config` key | Example | Sensitive |
-|----------|-------------------|---------|-----------|
-| Jira Base URL | `jira_base_url` | `https://example.atlassian.net` | no |
-| Jira Email | `jira_email` | `user@example.com` | no |
-| Jira Project Key | `jira_project_key` | `PRX` | no |
-| Jira API Token | `jira_token` | *(paste only in this field)* | **yes** |
-| GitHub Token (Git Delivery) | `github_token` | *(optional PAT, not OAuth)* | **yes** |
-| GitHub API URL | `github_api_url` | `https://api.github.com` | no |
+Use this only if you work in Desktop **Chat**.
 
-Do not put `git@github.com:owner/repo.git` in GitHub API URL. That is the Connect Git remote.
-| GitLab Token | `gitlab_token` | *(optional)* | **yes** |
-| GitLab Base URL | `gitlab_base_url` | `https://gitlab.example.com` | no |
+1. Download `praxis-runtime.mcpb` from the Praxis Runtime release on GitHub (`https://github.com/dfg-inc/praxis-runtime/releases`, version `v0.1.0-alpha.48`) and check its SHA-256 against `SHA256SUMS` / `release-meta.json` of that release.
+2. Claude Desktop → **Settings → Extensions** → install the `.mcpb`. Quit and reopen Desktop, and start a **new** Chat (an old chat keeps the old tool list).
+3. Optional: in the extension settings fill in Jira or GitHub/GitLab details (tokens are stored in the OS secure storage; never paste them into chat). Leave **Approval mode** empty unless you read [Approval Required and Trusted Client](../concepts/approvals).
 
-4. **Save**.
+Desktop Chat does not declare an approval dialog, so by default protected actions are refused with `APPROVAL_CLIENT_UI_REQUIRED` and a preview. To apply them in Chat the owner can explicitly choose Trusted Client; see [Approvals](../concepts/approvals).
 
-How to mint the token: [Jira credentials](/getting-started/credentials). Never paste the token into chat, Markdown, git, or screenshots.
+## What you do not need
 
-Claude Desktop stores `jira_token` in OS secure storage (macOS Keychain, Windows Credential Manager, Linux keychain where supported).
+No Jira or SimpleOne (local workflows work without them), no `npm install`, no administrator rights, no background service, no approval installer, no browser authentication device. Missing integration credentials are reported as explicit codes (for example `JIRA_CONFIG_UNAVAILABLE`) and never block local work.
 
-### Screenshot placeholder — Runtime settings
+## Update and uninstall
 
-> **Capture checklist:** Praxis Runtime settings form with the four fields; token field masked; Save control; no live token value.
-
-## 4. Install role plugins
-
-1. In Claude, open **Customize → Plugins** (or **Settings → Plugins**, depending on the Desktop build).
-2. Choose **Add** / **Upload plugins**.
-3. Select one ZIP, for example `praxis-ba.zip`.
-4. **Enable** that plugin.
-5. Repeat for any other roles you need.
-
-Each ZIP’s `.claude-plugin/plugin.json` must sit at the **archive root**. Do not re-zip a parent folder around it.
-
-### Screenshot placeholder — plugin upload
-
-> **Capture checklist:** Plugins list; upload control; `praxis-ba.zip` selected; plugin enabled; Skills list showing Praxis BA skills. Repeat optionally for other roles.
-
-## 5. Confirm installation
-
-1. Confirm **Praxis Runtime** is enabled.
-2. Confirm at least one role plugin is enabled.
-3. Confirm Skills for that role appear (see [Plugins](/plugins/overview)).
-4. Open a **new** Cowork session after enabling anything (see [First run](/getting-started/first-run)).
-
-If a Skill says `PRAXIS_RUNTIME_UNAVAILABLE`, the Runtime is missing or disabled. Installing another role ZIP will not fix that.
-
-## 6. Why this order
-
-| If you only install… | What happens |
-|----------------------|----------------|
-| Role ZIP, no Runtime | `praxis_doctor` is absent → `PRAXIS_RUNTIME_UNAVAILABLE` |
-| Runtime, no role ZIP | Tools exist, but you have no role Skill/prompts |
-| Four Runtimes | Wrong. Uninstall extra MCP copies. One Runtime is enough |
-| All four ZIPs | Allowed, not required |
-
-## 7. Developer rebuild (not for end users)
-
-Rebuilders and CI pack from each product repository (`npm run pack:mcpb` / `npm run pack:zip`). Ordinary users must download from that product’s GitLab **Releases**, not from monorepo Make targets or CI job artifact browsers.
+See [Update](./update) and [Uninstall](./uninstall).

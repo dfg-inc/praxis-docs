@@ -2,26 +2,23 @@
 
 ## You need
 
-- **Claude Desktop** with Cowork (local folder / computer use) on the computer that holds the product repository
-- A **Jira Cloud** site you can read (and, for apply workflows, write) in the target project
-- A **Jira API token** for your Atlassian account ([how to get one](/getting-started/credentials))
-- The Praxis **release artifacts** listed on [Installation](/getting-started/installation)
+- **Claude** with plugin support: Claude Code (CLI 2.1.278 or later), Claude Desktop **Code**, or **Cowork**, on the computer that holds the project folder. For Claude Desktop **Chat**, the Runtime comes from the separate MCPB (see [Installation](/getting-started/installation)).
+- **Node.js 20 or later** on that computer (the Runtime is a local Node process started by the plugin; the Desktop MCPB uses Claude Desktop's own runtime).
+- A project folder you can read and write.
 
-## You do not need (ordinary Desktop install)
+## Optional
 
-- Node.js, npm, Make, Docker, or SQLite
-- Editing Praxis source
-- `launchctl setenv`
+- A **Jira Cloud** site and API token, only if you want Jira features ([Jira credentials](/getting-started/credentials)).
+- A GitHub or GitLab token, only for pull/merge requests and CI status.
+
+## You do not need
+
+- Jira or SimpleOne (every local workflow works without them)
+- `npm install`, Make, Docker or SQLite
+- Administrator rights, a background service, an installer package or a hardware key
 - A repository `.env` file
-- Installing all four role plugins
-- A separate Runtime per role
+- All four role plugins (install only the roles you use)
 
-## Supported Jira
+## Project folder
 
-Praxis Cloud authentication uses **Atlassian account email + API token** (`jira_email` + `jira_token`) against a site such as `https://example.atlassian.net`.
-
-Do not put the password for your Atlassian account in `jira_token`. Do not put a Data Center personal access token into the Cloud token field.
-
-## Product folder
-
-Cowork must be able to read (and, for Developer/Quality, write) the **product** repository — the code you are changing — not the Praxis source tree unless you are developing Praxis itself.
+Claude must be able to read, and for Developer and Quality write, the **product** repository, not the Praxis source tree unless you are developing Praxis itself.
